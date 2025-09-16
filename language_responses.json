@@ -1,0 +1,246 @@
+{
+  "es": {
+    "welcome": "Bienvenido al Editor de Mundos. Diga 'ayuda' para ver los comandos disponibles.",
+    "listening": "Escuchando...",
+    "command_not_found": "Comando no reconocido. Diga 'ayuda' para ver los comandos disponibles.",
+    "directory_changed": "Navegando a {directory}",
+    "help_intro": "Comandos disponibles en {directory}:",
+    "voice_activated": "Sistema de voz activado. Puede comenzar a hablar.",
+    "voice_deactivated": "Sistema de voz desactivado.",
+    "language_changed": "Idioma cambiado a español",
+    "microphone_error": "Error al acceder al micrófono. Verifique los permisos.",
+    "speech_not_supported": "Reconocimiento de voz no soportado en este navegador.",
+    "processing_command": "Procesando comando...",
+    "navigation_success": "Navegación exitosa a {section}",
+    "current_location": "Está en el directorio {directory}",
+    "going_back": "Volviendo al directorio anterior",
+    "at_root": "Ya está en el directorio raíz",
+    "recent_commands": "Comandos recientes: {commands}",
+    "greeting": "Hola, ¿en qué puedo ayudarte?",
+    "unrecognized_command": "Lo siento, no entendí ese comando.",
+    "cookies_accepted": "Gracias por aceptar las cookies.",
+    "cookies_declined": "Has rechazado las cookies. Algunas funcionalidades podrían estar limitadas.",
+    "opening_editor": "Abriendo el editor de libros.",
+    "opening_url_analyzer": "Abriendo el analizador de URLs.",
+    "opening_video_selection": "Abriendo la sección de selección de videos.",
+    "opening_3d_worlds": "Abriendo la sección de mundos 3D.",
+    "cookie_consent": {
+      "request": "¿Desea aceptar las cookies para mejorar su experiencia?",
+      "accepted": "Cookies aceptadas. Gracias por su consentimiento.",
+      "declined": "Cookies rechazadas. Funcionalidad limitada disponible.",
+      "customization": "Puede personalizar sus preferencias de cookies en configuración.",
+      "policy": "Consulte nuestra política de privacidad para más información."
+    },
+    "platform_actions": {
+      "carlo_maxxine": "Navegando a Carlo Maxxine Saloon",
+      "genie3": "Accediendo a Genie3 AI",
+      "odyssey": "Conectando con Odyssey World",
+      "platform_list": "Plataformas disponibles: Carlo Maxxine, Genie3, Odyssey World"
+    },
+    "video_actions": {
+      "search": "Iniciando búsqueda de videos",
+      "select": "Video seleccionado correctamente",
+      "export": "Exportando selección de videos",
+      "library": "Cargando biblioteca de videos"
+    },
+    "world_actions": {
+      "validate": "Validando URL de mundo 3D",
+      "add": "Añadiendo mundo personalizado",
+      "export": "Exportando selección de mundos"
+    },
+    "avatar_actions": {
+      "library": "Cargando biblioteca de avatares",
+      "customize": "Abriendo personalizador de avatares",
+      "select": "Avatar seleccionado",
+      "export": "Exportando avatares seleccionados"
+    },
+    "configuration": {
+      "language_options": "Idiomas disponibles: Español, Inglés, Francés",
+      "voice_settings": "Configuración de voz disponible",
+      "cookie_settings": "Gestión de cookies disponible",
+      "api_configuration": "Configuración de API disponible"
+    },
+    "tools": {
+      "export_options": "Opciones de exportación: Videos, Mundos, Avatares, Configuración",
+      "import_options": "Opciones de importación: Archivo, URL, Configuración, Backup",
+      "analysis_started": "Iniciando análisis de URL",
+      "backup_created": "Backup creado exitosamente"
+    },
+    "errors": {
+      "no_selection": "No hay elementos seleccionados",
+      "invalid_url": "URL no válida",
+      "network_error": "Error de conexión de red",
+      "permission_denied": "Permisos denegados",
+      "file_not_found": "Archivo no encontrado"
+    },
+    "confirmations": {
+      "are_you_sure": "¿Está seguro de realizar esta acción?",
+      "confirm_delete": "¿Confirma que desea eliminar este elemento?",
+      "confirm_export": "¿Confirma la exportación de los elementos seleccionados?",
+      "confirm_reset": "¿Confirma que desea restablecer la configuración?"
+    }
+  },
+  "en": {
+    "welcome": "Welcome to World Editor. Say 'help' to see available commands.",
+    "listening": "Listening...",
+    "command_not_found": "Command not recognized. Say 'help' to see available commands.",
+    "directory_changed": "Navigating to {directory}",
+    "help_intro": "Available commands in {directory}:",
+    "voice_activated": "Voice system activated. You can start speaking.",
+    "voice_deactivated": "Voice system deactivated.",
+    "language_changed": "Language changed to English",
+    "microphone_error": "Error accessing microphone. Check permissions.",
+    "speech_not_supported": "Speech recognition not supported in this browser.",
+    "processing_command": "Processing command...",
+    "navigation_success": "Successfully navigated to {section}",
+    "current_location": "You are in {directory} directory",
+    "going_back": "Going back to previous directory",
+    "at_root": "Already at root directory",
+    "recent_commands": "Recent commands: {commands}",
+    "greeting": "Hello, how can I help you?",
+    "unrecognized_command": "Sorry, I didn't understand that command.",
+    "cookies_accepted": "Thank you for accepting cookies.",
+    "cookies_declined": "You have declined cookies. Some functionalities might be limited.",
+    "opening_editor": "Opening the book editor.",
+    "opening_url_analyzer": "Opening the URL analyzer.",
+    "opening_video_selection": "Opening the video selection section.",
+    "opening_3d_worlds": "Opening the 3D worlds section.",
+    "cookie_consent": {
+      "request": "Would you like to accept cookies to improve your experience?",
+      "accepted": "Cookies accepted. Thank you for your consent.",
+      "declined": "Cookies declined. Limited functionality available.",
+      "customization": "You can customize your cookie preferences in settings.",
+      "policy": "Check our privacy policy for more information."
+    },
+    "platform_actions": {
+      "carlo_maxxine": "Navigating to Carlo Maxxine Saloon",
+      "genie3": "Accessing Genie3 AI",
+      "odyssey": "Connecting to Odyssey World",
+      "platform_list": "Available platforms: Carlo Maxxine, Genie3, Odyssey World"
+    },
+    "video_actions": {
+      "search": "Starting video search",
+      "select": "Video selected successfully",
+      "export": "Exporting video selection",
+      "library": "Loading video library"
+    },
+    "world_actions": {
+      "validate": "Validating 3D world URL",
+      "add": "Adding custom world",
+      "export": "Exporting world selection"
+    },
+    "avatar_actions": {
+      "library": "Loading avatar library",
+      "customize": "Opening avatar customizer",
+      "select": "Avatar selected",
+      "export": "Exporting selected avatars"
+    },
+    "configuration": {
+      "language_options": "Available languages: Spanish, English, French",
+      "voice_settings": "Voice configuration available",
+      "cookie_settings": "Cookie management available",
+      "api_configuration": "API configuration available"
+    },
+    "tools": {
+      "export_options": "Export options: Videos, Worlds, Avatars, Configuration",
+      "import_options": "Import options: File, URL, Configuration, Backup",
+      "analysis_started": "Starting URL analysis",
+      "backup_created": "Backup created successfully"
+    },
+    "errors": {
+      "no_selection": "No items selected",
+      "invalid_url": "Invalid URL",
+      "network_error": "Network connection error",
+      "permission_denied": "Permission denied",
+      "file_not_found": "File not found"
+    },
+    "confirmations": {
+      "are_you_sure": "Are you sure you want to perform this action?",
+      "confirm_delete": "Do you confirm you want to delete this item?",
+      "confirm_export": "Do you confirm the export of selected items?",
+      "confirm_reset": "Do you confirm you want to reset the configuration?"
+    }
+  },
+  "fr": {
+    "welcome": "Bienvenue dans l'Éditeur de Mondes. Dites 'aide' pour voir les commandes disponibles.",
+    "listening": "Écoute...",
+    "command_not_found": "Commande non reconnue. Dites 'aide' pour voir les commandes disponibles.",
+    "directory_changed": "Navigation vers {directory}",
+    "help_intro": "Commandes disponibles dans {directory}:",
+    "voice_activated": "Système vocal activé. Vous pouvez commencer à parler.",
+    "voice_deactivated": "Système vocal désactivé.",
+    "language_changed": "Langue changée en français",
+    "microphone_error": "Erreur d'accès au microphone. Vérifiez les permissions.",
+    "speech_not_supported": "Reconnaissance vocale non supportée dans ce navigateur.",
+    "processing_command": "Traitement de la commande...",
+    "navigation_success": "Navigation réussie vers {section}",
+    "current_location": "Vous êtes dans le répertoire {directory}",
+    "going_back": "Retour au répertoire précédent",
+    "at_root": "Déjà dans le répertoire racine",
+    "recent_commands": "Commandes récentes: {commands}",
+    "greeting": "Bonjour, comment puis-je vous aider?",
+    "unrecognized_command": "Désolé, je n'ai pas compris cette commande.",
+    "cookies_accepted": "Merci d'avoir accepté les cookies.",
+    "cookies_declined": "Vous avez refusé les cookies. Certaines fonctionnalités pourraient être limitées.",
+    "opening_editor": "Ouverture de l'éditeur de livres.",
+    "opening_url_analyzer": "Ouverture de l'analyseur d'URLs.",
+    "opening_video_selection": "Ouverture de la section de sélection de vidéos.",
+    "opening_3d_worlds": "Ouverture de la section des mondes 3D.",
+    "cookie_consent": {
+      "request": "Souhaitez-vous accepter les cookies pour améliorer votre expérience?",
+      "accepted": "Cookies acceptés. Merci pour votre consentement.",
+      "declined": "Cookies refusés. Fonctionnalité limitée disponible.",
+      "customization": "Vous pouvez personnaliser vos préférences de cookies dans les paramètres.",
+      "policy": "Consultez notre politique de confidentialité pour plus d'informations."
+    },
+    "platform_actions": {
+      "carlo_maxxine": "Navigation vers Carlo Maxxine Saloon",
+      "genie3": "Accès à Genie3 AI",
+      "odyssey": "Connexion à Odyssey World",
+      "platform_list": "Plateformes disponibles: Carlo Maxxine, Genie3, Odyssey World"
+    },
+    "video_actions": {
+      "search": "Démarrage de la recherche de vidéos",
+      "select": "Vidéo sélectionnée avec succès",
+      "export": "Exportation de la sélection de vidéos",
+      "library": "Chargement de la bibliothèque de vidéos"
+    },
+    "world_actions": {
+      "validate": "Validation de l'URL du monde 3D",
+      "add": "Ajout d'un monde personnalisé",
+      "export": "Exportation de la sélection de mondes"
+    },
+    "avatar_actions": {
+      "library": "Chargement de la bibliothèque d'avatars",
+      "customize": "Ouverture du personnalisateur d'avatars",
+      "select": "Avatar sélectionné",
+      "export": "Exportation des avatars sélectionnés"
+    },
+    "configuration": {
+      "language_options": "Langues disponibles: Espagnol, Anglais, Français",
+      "voice_settings": "Configuration vocale disponible",
+      "cookie_settings": "Gestion des cookies disponible",
+      "api_configuration": "Configuration API disponible"
+    },
+    "tools": {
+      "export_options": "Options d'exportation: Vidéos, Mondes, Avatars, Configuration",
+      "import_options": "Options d'importation: Fichier, URL, Configuration, Sauvegarde",
+      "analysis_started": "Démarrage de l'analyse d'URL",
+      "backup_created": "Sauvegarde créée avec succès"
+    },
+    "errors": {
+      "no_selection": "Aucun élément sélectionné",
+      "invalid_url": "URL invalide",
+      "network_error": "Erreur de connexion réseau",
+      "permission_denied": "Permission refusée",
+      "file_not_found": "Fichier non trouvé"
+    },
+    "confirmations": {
+      "are_you_sure": "Êtes-vous sûr de vouloir effectuer cette action?",
+      "confirm_delete": "Confirmez-vous vouloir supprimer cet élément?",
+      "confirm_export": "Confirmez-vous l'exportation des éléments sélectionnés?",
+      "confirm_reset": "Confirmez-vous vouloir réinitialiser la configuration?"
+    }
+  }
+}
+

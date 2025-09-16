@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Mundos - Guía de Registro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .info-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .info-section h3 {
+            color: #555;
+            margin: 20px 0 10px 0;
+            font-size: 1.3rem;
+        }
+
+        .info-section p, .info-section li {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .info-section ul {
+            margin-left: 20px;
+        }
+
+        .register-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .register-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .features {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .features h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .existing-users {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .existing-users h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .user-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 10px;
+            background: white;
+        }
+
+        .user-item {
+            padding: 8px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .user-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .user-item:last-child {
+            border-bottom: none;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Editor de Mundos</h1>
+            <p>Plataforma integral para creación de contenido, mundos 3D y edición de libros</p>
+        </div>
+
+        <div class="main-content">
+            <div class="info-section">
+                <h2>¿Qué es el Editor de Mundos?</h2>
+                <p>Una plataforma completa que integra múltiples herramientas para la creación de contenido digital, mundos virtuales y edición profesional de libros.</p>
+
+                <h3>🎯 Funcionalidades Principales:</h3>
+                <ul>
+                    <li><strong>Plataformas Externas:</strong> Integración con carlomaxxine.com, genie3.ai y más</li>
+                    <li><strong>Mundos 3D:</strong> Creación con Hunyuan 3D, ReadyPlayer.me y Mirage2.org</li>
+                    <li><strong>Editor de Libros:</strong> Maquetación profesional y exportación múltiple</li>
+                    <li><strong>Herramientas de Resumen:</strong> NotebookLM, Aliadina.com y URLs personalizadas</li>
+                    <li><strong>Seguridad:</strong> Verificación automática con VirusTotal</li>
+                </ul>
+
+                <h3>🔐 Sistema de Registro "WéB":</h3>
+                <p>Nuestro sistema único permite dos tipos de registro:</p>
+                <ul>
+                    <li><strong>Nuevo Usuario:</strong> Crea una cuenta completamente nueva con tu propio espacio personalizado</li>
+                    <li><strong>Usuario Existente:</strong> Vincula tu cuenta con datos ya existentes en la base de datos</li>
+                </ul>
+
+                <h3>💾 Almacenamiento Personalizado:</h3>
+                <p>Cada usuario obtiene:</p>
+                <ul>
+                    <li>Tablas de base de datos personalizadas</li>
+                    <li>Espacio privado para proyectos</li>
+                    <li>Configuraciones individuales</li>
+                    <li>Historial de mundos y avatares</li>
+                </ul>
+            </div>
+
+            <div class="register-section">
+                <h2>Registrarse con WéB</h2>
+                
+                <div class="register-tabs">
+                    <button class="tab-button active" onclick="switchTab('new')">Nuevo Usuario</button>
+                    <button class="tab-button" onclick="switchTab('existing')">Usuario Existente</button>
+                </div>
+
+                <!-- Registro Nuevo Usuario -->
+                <div id="new-tab" class="tab-content active">
+                    <form id="newUserForm">
+                        <div class="form-group">
+                            <label for="new-username">Nombre de Usuario:</label>
+                            <input type="text" id="new-username" name="username" required 
+                                   placeholder="Ej: mi_usuario_2024">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-email">Email:</label>
+                            <input type="email" id="new-email" name="email" required 
+                                   placeholder="tu@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">Contraseña:</label>
+                            <input type="password" id="new-password" name="password" required 
+                                   placeholder="Mínimo 6 caracteres">
+                        </div>
+                        <button type="submit" class="btn">Crear Cuenta Nueva</button>
+                    </form>
+                </div>
+
+                <!-- Registro Usuario Existente -->
+                <div id="existing-tab" class="tab-content">
+                    <p style="margin-bottom: 20px; color: #666;">
+                        Si ya tienes datos en la base de datos, puedes vincular tu nueva cuenta web con tu información existente.
+                    </p>
+                    
+                    <form id="existingUserForm">
+                        <div class="form-group">
+                            <label for="existing-username">Nombre de Usuario Web:</label>
+                            <input type="text" id="existing-username" name="username" required 
+                                   placeholder="Nuevo nombre para acceso web">
+                        </div>
+                        <div class="form-group">
+                            <label for="existing-email">Email:</label>
+                            <input type="email" id="existing-email" name="email" required 
+                                   placeholder="tu@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="existing-password">Contraseña:</label>
+                            <input type="password" id="existing-password" name="password" required 
+                                   placeholder="Nueva contraseña para acceso web">
+                        </div>
+                        <div class="form-group">
+                            <label for="existing-user-id">ID de Usuario Existente:</label>
+                            <input type="number" id="existing-user-id" name="existing_user_id" required 
+                                   placeholder="Ej: 123">
+                        </div>
+                        <button type="button" class="btn" onclick="loadExistingUsers()" style="margin-bottom: 15px;">
+                            🔍 Buscar Usuarios Existentes
+                        </button>
+                        <button type="submit" class="btn">Vincular con Usuario Existente</button>
+                    </form>
+
+                    <div class="existing-users" id="existing-users" style="display: none;">
+                        <h4>Usuarios Encontrados en la Base de Datos:</h4>
+                        <div class="user-list" id="user-list">
+                            <!-- Lista dinámica de usuarios -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="responseMessage" class="message"></div>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>🚀 Características del Editor de Mundos</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Integración Web</h3>
+                    <p>Conecta con múltiples plataformas externas y servicios web</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Mundos 3D</h3>
+                    <p>Crea mundos interactivos con IA y tecnologías avanzadas</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Editor de Libros</h3>
+                    <p>Maquetación profesional con exportación a múltiples formatos</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Seguridad</h3>
+                    <p>Verificación automática de contenido con VirusTotal</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Base de Datos</h3>
+                    <p>Almacenamiento personalizado para cada usuario</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Personalización</h3>
+                    <p>Avatares, mundos y configuraciones únicas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Editor de Mundos v4.0 - Sistema de Registro "WéB" | Base de datos: lldn858.servidoresdns.net</p>
+        </div>
+    </div>
+
+    <script>
+        // Cambiar entre pestañas
+        function switchTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mostrar pestaña seleccionada
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+
+            // Limpiar mensajes
+            hideMessage();
+        }
+
+        // Mostrar mensaje
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('responseMessage');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+
+        // Ocultar mensaje
+        function hideMessage() {
+            const messageDiv = document.getElementById('responseMessage');
+            messageDiv.style.display = 'none';
+        }
+
+        // Registro de nuevo usuario
+        document.getElementById('newUserForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            hideMessage();
+
+            const formData = new FormData(event.target);
+            const data = {
+                username: formData.get('username'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                registration_type: 'new'
+            };
+
+            try {
+                const response = await fetch('auth.php?action=register_with_web', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage(`¡Registro exitoso! Bienvenido ${result.username}. Tu ID de usuario es: ${result.user_id}`, 'success');
+                    event.target.reset();
+                    
+                    // Redirigir al editor principal después de 3 segundos
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                } else {
+                    showMessage(`Error: ${result.message || result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Error de conexión: ${error.message}`, 'error');
+            }
+        });
+
+        // Registro de usuario existente
+        document.getElementById('existingUserForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            hideMessage();
+
+            const formData = new FormData(event.target);
+            const data = {
+                username: formData.get('username'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                existing_user_id: parseInt(formData.get('existing_user_id')),
+                registration_type: 'existing'
+            };
+
+            try {
+                const response = await fetch('auth.php?action=register_with_web', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage(`¡Registro exitoso! Cuenta vinculada para ${result.username}. Usuario existente ID: ${result.existing_user_id}`, 'success');
+                    event.target.reset();
+                    
+                    // Redirigir al editor principal después de 3 segundos
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                } else {
+                    showMessage(`Error: ${result.message || result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Error de conexión: ${error.message}`, 'error');
+            }
+        });
+
+        // Cargar usuarios existentes
+        async function loadExistingUsers() {
+            try {
+                const response = await fetch('auth.php?action=list_existing_users');
+                const result = await response.json();
+
+                if (result.success) {
+                    const userList = document.getElementById('user-list');
+                    const existingUsersDiv = document.getElementById('existing-users');
+                    
+                    userList.innerHTML = '';
+                    
+                    if (result.users.length > 0) {
+                        result.users.forEach(user => {
+                            const userItem = document.createElement('div');
+                            userItem.className = 'user-item';
+                            userItem.innerHTML = `
+                                <strong>ID: ${user.id}</strong> - ${user.username}<br>
+                                <small>Tabla: ${user.source_table} | Creado: ${user.created_at || 'N/A'}</small>
+                            `;
+                            userItem.onclick = () => {
+                                document.getElementById('existing-user-id').value = user.id;
+                                showMessage(`Usuario seleccionado: ${user.username} (ID: ${user.id})`, 'success');
+                            };
+                            userList.appendChild(userItem);
+                        });
+                        existingUsersDiv.style.display = 'block';
+                    } else {
+                        userList.innerHTML = '<p>No se encontraron usuarios existentes en la base de datos.</p>';
+                        existingUsersDiv.style.display = 'block';
+                    }
+                } else {
+                    showMessage(`Error al cargar usuarios: ${result.message}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Error de conexión: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
+

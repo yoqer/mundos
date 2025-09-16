@@ -1,0 +1,101 @@
+{
+  "/": {
+    "name": "Raíz",
+    "description": "Directorio principal del Editor de Mundos",
+    "commands": ["ayuda", "navegación", "configuración", "herramientas", "análisis"],
+    "subdirectories": ["/navegacion/", "/configuracion/", "/herramientas/", "/analisis/"],
+    "voice_triggers": ["inicio", "home", "raíz", "principal"]
+  },
+  "/navegacion/": {
+    "name": "Navegación",
+    "description": "Navegación entre diferentes secciones del editor",
+    "commands": ["plataformas", "videos", "mundos", "avatares", "volver"],
+    "subdirectories": ["/navegacion/plataformas/", "/navegacion/videos/", "/navegacion/mundos/", "/navegacion/avatares/"],
+    "voice_triggers": ["navegación", "navigation", "navegar", "ir a"]
+  },
+  "/navegacion/plataformas/": {
+    "name": "Plataformas Externas",
+    "description": "Gestión de plataformas externas integradas",
+    "commands": ["carlo maxxine", "genie3", "odyssey", "lista", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["plataformas", "platforms", "externas", "servicios"]
+  },
+  "/navegacion/videos/": {
+    "name": "Gestión de Videos",
+    "description": "Selección y gestión de videos",
+    "commands": ["buscar", "seleccionar", "exportar", "biblioteca", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["videos", "multimedia", "biblioteca"]
+  },
+  "/navegacion/mundos/": {
+    "name": "Mundos 3D",
+    "description": "Gestión de mundos y escenas 3D",
+    "commands": ["validar", "añadir", "personalizado", "exportar", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["mundos", "worlds", "3d", "escenas"]
+  },
+  "/navegacion/avatares/": {
+    "name": "Avatares",
+    "description": "Personalización y gestión de avatares",
+    "commands": ["biblioteca", "personalizar", "seleccionar", "exportar", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["avatares", "avatars", "personajes", "modelos"]
+  },
+  "/configuracion/": {
+    "name": "Configuración",
+    "description": "Configuraciones del sistema y preferencias",
+    "commands": ["idioma", "voz", "cookies", "api", "general", "volver"],
+    "subdirectories": ["/configuracion/idioma/", "/configuracion/voz/", "/configuracion/cookies/"],
+    "voice_triggers": ["configuración", "configuration", "ajustes", "preferencias"]
+  },
+  "/configuracion/idioma/": {
+    "name": "Configuración de Idioma",
+    "description": "Selección y configuración de idiomas",
+    "commands": ["español", "inglés", "francés", "cambiar", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["idioma", "language", "lenguaje"]
+  },
+  "/configuracion/voz/": {
+    "name": "Configuración de Voz",
+    "description": "Configuración del sistema de reconocimiento y síntesis de voz",
+    "commands": ["activar", "desactivar", "velocidad", "tono", "micrófono", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["voz", "voice", "audio", "reconocimiento"]
+  },
+  "/configuracion/cookies/": {
+    "name": "Gestión de Cookies",
+    "description": "Configuración de cookies y privacidad",
+    "commands": ["aceptar", "rechazar", "personalizar", "política", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["cookies", "privacidad", "datos"]
+  },
+  "/herramientas/": {
+    "name": "Herramientas",
+    "description": "Herramientas adicionales del editor",
+    "commands": ["exportar", "importar", "backup", "estadísticas", "volver"],
+    "subdirectories": ["/herramientas/exportar/", "/herramientas/importar/"],
+    "voice_triggers": ["herramientas", "tools", "utilidades"]
+  },
+  "/herramientas/exportar/": {
+    "name": "Exportación",
+    "description": "Herramientas de exportación de datos",
+    "commands": ["videos", "mundos", "avatares", "configuración", "todo", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["exportar", "export", "guardar", "descargar"]
+  },
+  "/herramientas/importar/": {
+    "name": "Importación",
+    "description": "Herramientas de importación de datos",
+    "commands": ["archivo", "url", "configuración", "backup", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["importar", "import", "cargar", "subir"]
+  },
+  "/analisis/": {
+    "name": "Análisis de URLs",
+    "description": "Análisis y validación de URLs",
+    "commands": ["analizar", "validar", "plataforma", "contenido", "volver"],
+    "subdirectories": [],
+    "voice_triggers": ["análisis", "analysis", "validar", "comprobar"]
+  }
+}
+

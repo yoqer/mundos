@@ -1,0 +1,23 @@
+{
+    "database": {
+        "host": "localhost",
+        "database": "editor_mundos",
+        "username": "tu_usuario_db",
+        "password": "tu_password_db",
+        "port": "3306",
+        "charset": "utf8mb4"
+    },
+    "api_keys": {
+        "gemini_key": "tu_clave_gemini_aqui",
+        "lupaupscaler_key": "tu_clave_lupaupscaler_aqui",
+        "editor_token": "tu_token_editor_aqui"
+    },
+    "hosting": {
+        "type": "shared_hosting",
+        "php_version": "7.4+",
+        "mysql_version": "5.7+",
+        "ssl_enabled": true,
+        "domain": "tu-dominio.com"
+    }
+}
+

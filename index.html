@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Mundos - Integración de Contenido Externo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="voice_styles.css">
+    <link rel="stylesheet" href="cover_styles.css">
+    <link rel="stylesheet" href="layout_styles.css">
+    <link rel="stylesheet" href="api_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Editor de Mundos</h1>
+            <p>Integración de contenido externo, videos y mundos 3D</p>
+        </header>
+
+        <nav class="navigation">
+            <but            <button class="nav-btn" data-section="url-analyzer">Analizar URLs</button>
+            <button class="nav-btn" data-section="navigation-cache">Navegación</button>
+            <button class="nav-btn" data-section="gemini-storybook">Gemini Storybook</button>
+            <button class="nav-btn" data-section="genie3-navigation">Genie3</button>
+            <button class="nav-btn" data-section="video-selection">Videos</button>
+            <button class="nav-btn" data-section="world-control">Mundos</button>
+            <button class="nav-btn" data-section="resumen-tools">Resumen</button>
+            <button class="nav-btn" data-section="presentation-generator">Presentaciones</button>
+            <button class="nav-btn" data-section="content-importer">Importar</button>
+            <button class="nav-btn" data-section="book-editor">Editar</button>utton>
+            <button class="nav-btn help-btn" onclick="openHelpPage()">❓ Ayuda</button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Sección 1: Plataformas Externas -->
+            <section id="external-platforms" class="content-section active">
+                <h2>Análisis y Corrección de URLs de Plataformas Externas</h2>
+                <div class="url-analyzer">
+                    <input type="url" id="url-input" placeholder="Ingresa la URL de la plataforma externa">
+                    <button onclick="analyzeURL()">Analizar URL</button>
+                </div>
+                <div id="url-results" class="results-panel"></div>
+
+                <!-- Navegación Carlo Maxxine -->
+                <div class="platform-section">
+                    <h3>Carlo Maxxine Saloon</h3>
+                    <div class="platform-controls">
+                        <button onclick="navigateToCarloMaxxine()">Navegar a carlomaxxine.com/saloon</button>
+                        <button onclick="captureCarloURL()">Capturar            <!-- Sección 2: Selección de Videos -->
+            <section id="video-selection" class="content-section">
+                <h2>Selección de Videos y Contenido Multimedia</h2>
+                
+                <!-- Compartir Canales Completos -->
+                <div class="platform-section">
+                    <h3>📺 Compartir Canal Completo</h3>
+                    <div class="platform-controls">
+                        <input type="url" id="channel-url" placeholder="URL del canal (YouTube, Vimeo, etc.)">
+                        <button onclick="shareCompleteChannel()">Compartir Canal Completo</button>
+                        <button onclick="analyzeChannelContent()">Analizar Contenido del Canal</button>
+                    </div>
+                    <div id="channel-info" class="info-display">
+                        <h4>Información del Canal:</h4>
+                        <div id="channel-details"></div>
+                        <div id="channel-videos-list"></div>
+                    </div>
+                </div>
+
+                <!-- Listas de Reproducción -->
+                <div class="platform-section">
+                    <h3>📋 Listas de Reproducción</h3>
+                    <div class="platform-controls">
+                        <input type="url" id="playlist-url" placeholder="URL de la lista de reproducción">
+                        <button onclick="addPlaylist()">Añadir Lista de Reproducción</button>
+                        <button onclick="createCustomPlaylist()">Crear Lista Personalizada</button>
+                    </div>
+                    
+                    <div class="playlist-manager">
+                        <h4>Listas de Reproducción Activas:</h4>
+                        <div id="active-playlists"></div>
+                        
+                        <h4>Configuración de Reproducción:</h4>
+                        <div class="playback-settings">
+                            <label>
+                                <input type="checkbox" id="autoplay-next" checked> 
+                                Reproducir siguiente video automáticamente
+                            </label>
+                            <label>
+                                <input type="checkbox" id="loop-playlist"> 
+                                Repetir lista al finalizar
+                            </label>
+                            <label>
+                                <input type="checkbox" id="shuffle-playlist"> 
+                                Reproducción aleatoria
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reproductor Integrado -->
+                <div class="platform-section">
+                    <h3>🎬 Reproductor Integrado</h3>
+                    <div class="video-player-container">
+                        <div id="video-player">
+                            <p>Selecciona un video o lista de reproducción para comenzar</p>
+                        </div>
+                        <div class="player-controls">
+                            <button onclick="previousVideo()">⏮️ Anterior</button>
+                            <button onclick="togglePlayPause()">⏯️ Play/Pausa</button>
+                            <button onclick="nextVideo()">⏭️ Siguiente</button>
+                            <button onclick="toggleFullscreen()">🔳 Pantalla Completa</button>
+                        </div>
+                        <div class="playlist-info">
+                            <span id="current-video-info">No hay video seleccionado</span>
+                            <span id="playlist-progress">0/0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selección de Videos Individuales (contenido original) -->
+                <div class="platform-section">
+                    <h3>🎥 Selección de Videos Individuales</h3>
+                    <div class="platform-controls">
+                        <input type="url" id="video-url" placeholder="URL del video">
+                        <button onclick="addSingleVideo()">Añadir Video</button>
+                        <button onclick="previewVideo()">Vista Previa</button>
+                    </div>
+                </div>
+
+                <!-- Análisis de Contenido con Wesim -->
+                <div class="platform-section">
+                    <h3>🔍 Análisis de Contenido con Wesim</h3>
+                    <div class="platform-controls">
+                        <input type="url" id="wesim-channel-url" placeholder="URL del canal para análisis completo">
+                        <button onclick="analyzeWithWesim()">Analizar con Wesim</button>
+                        <button onclick="extractChannelContent()">Extraer Todo el Contenido</button>
+                    </div>
+                    
+                    <div class="wesim-options">
+                        <h4>Opciones de Análisis:</h4>
+                        <div class="analysis-options">
+                            <label>
+                                <input type="checkbox" id="store-videos" checked> 
+                                Almacenar videos para el usuario
+                            </label>
+                            <label>
+                                <input type="checkbox" id="generate-summaries"> 
+                                Generar resúmenes automáticos
+                            </label>
+                            <label>
+                                <input type="checkbox" id="extract-transcripts"> 
+                                Extraer transcripciones
+                            </label>
+                            <label>
+                                <input type="checkbox" id="analyze-sentiment"> 
+                                Análisis de sentimientos
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="wesim-results" class="wesim-results">
+                        <h4>Resultados del Análisis:</h4>
+                        <div id="analysis-summary"></div>
+                        <div id="stored-content"></div>
+                    </div>
+                    
+                    <div class="content-actions">
+                        <h4>Acciones con Contenido Almacenado:</h4>
+                        <button onclick="summarizeAllVideos()">Resumir Todos los Videos</button>
+                        <button onclick="createPresentationFromVideos()">Crear Presentación</button>
+                        <button onclick="exportToNotebookLM()">Exportar a NotebookLM</button>
+                        <button onclick="generateReport()">Generar Informe</button>
+                    </div>
+                </div>
+                <div class="platform-section">
+                    <h3>TryGenie3.net - Selección de Videos</h3>
+                    <div class="platform-controls">
+                        <button onclick="navigateToTryGenie3()">Navegar a trygenie3.net</button>
+                        <button onclick="selectGenie3Video()">Seleccionar Video</button>
+                        <button onclick="clearGenie3Cache()">Limpiar Caché</button>
+                    </div>
+                    <div id="genie3-cache" class="cache-display"></div>
+                </div>
+
+                <div id="video-results" class="results-panel"></div>
+            </section>
+                    <h3>Experience Odyssey World</h3>
+                    <div class="platform-controls">
+                        <button onclick="navigateToOdyssey()">Navegar a experience.odyssey.world</button>
+                        <button onclick="controlOdysseyChannel()">Control de Canal</button>
+                        <div class="channel-controls">
+                            <select id="odyssey-channel">
+                                <option value="main">Canal Principal</option>
+                                <option value="secondary">Canal Secundario</option>
+                                <option value="custom">Canal Personalizado</option>
+                            </select>
+                            <button onclick="switchOdysseyChannel()">Cambiar Canal</button>
+                        </div>
+                    </div>
+                    <div id="odyssey-status" class="status-display"></div>
+                </div>
+            </section>
+
+            <!-- Sección 2: Selección de Videos -->
+            <section id="video-selection" class="content-section">
+                <h2>Selección de Videos en TryGenie3.net</h2>
+                <div class="video-platform">
+                    <button onclick="navigateToTryGenie3()">Navegar a trygenie3.net</button>
+                    <div class="video-controls">
+                        <input type="text" id="video-search" placeholder="Buscar videos...">
+                        <button onclick="searchVideos()">Buscar</button>
+                        <button onclick="loadVideoLibrary()">Cargar Biblioteca</button>
+                    </div>
+                    <div id="video-library" class="video-grid"></div>
+                    <div class="video-selection">
+                        <h3>Videos Seleccionados</h3>
+                        <div id="selected-videos" class="selected-items"></div>
+                        <button onclick="exportVideoSelection()">Exportar Selección</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 3: Mundos 3D -->
+            <section id="3d-worlds" class="content-section">
+                <h2>Mundos 3D y Generación con IA</h2>
+                
+                <!-- Hunyuan 3D -->
+                <div class="platform-section">
+                    <h3>🌐 Hunyuan 3D - Generación de Mundos IA</h3>
+                    <div class="hunyuan-options">
+                        <div class="hunyuan-option">
+                            <h4>SceneTo3D - Conversión de Imágenes</h4>
+                            <div class="platform-controls">
+                                <input type="file" id="scene-image" accept="image/*">
+                                <textarea id="scene-description" placeholder="Describe la escena 3D que quieres crear..."></textarea>
+                                <select id="scene-resolution">
+                                    <option value="512">512x512</option>
+                                    <option value="1024">1024x1024</option>
+                                    <option value="2048">2048x2048</option>
+                                </select>
+                                <button onclick="generateSceneTo3D()">Generar Escena 3D</button>
+                            </div>
+                        </div>
+                        <div class="hunyuan-option">
+                            <h4>World Model - Mundos Inmersivos</h4>
+                            <div class="platform-controls">
+                                <textarea id="world-prompt" placeholder="Describe el mundo 3D que quieres crear..."></textarea>
+                                <select id="world-type">
+                                    <option value="panoramic">Panorámico</option>
+                                    <option value="explorable">Explorable</option>
+                                    <option value="interactive">Interactivo</option>
+                                    <option value="vr">Inmersivo VR</option>
+                                </select>
+                                <select id="world-quality">
+                                    <option value="lite">Lite</option>
+                                    <option value="standard">Estándar</option>
+                                    <option value="high">Alta</option>
+                                    <option value="ultra">Ultra</option>
+                                </select>
+                                <button onclick="generateWorldModel()">Generar Mundo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mirage2.org -->
+                <div class="platform-section">
+                    <h3>🎮 Mirage2.org - Mundos Interactivos IA</h3>
+                    <div class="mirage-options">
+                        <div class="mirage-option">
+                            <h4>Crear Mundo desde Imagen</h4>
+                            <div class="platform-controls">
+                                <input type="file" id="mirage-image" accept="image/*">
+                                <textarea id="mirage-prompt" placeholder="Describe el mundo interactivo que quieres crear..."></textarea>
+                                <select id="mirage-style">
+                                    <option value="realistic">Realista</option>
+                                    <option value="cartoon">Cartoon</option>
+                                    <option value="fantasy">Fantasía</option>
+                                    <option value="scifi">Ciencia Ficción</option>
+                                    <option value="horror">Horror</option>
+                                </select>
+                                <button onclick="createMirageWorld()">Crear Mundo Mirage</button>
+                            </div>
+                        </div>
+                        <div class="mirage-option">
+                            <h4>Compartir Mundo</h4>
+                            <div class="platform-controls">
+                                <input type="text" id="world-title" placeholder="Título del mundo">
+                                <textarea id="world-description" placeholder="Descripción del mundo..."></textarea>
+                                <button onclick="shareMirageWorld()">Compartir Mundo</button>
+                                <button onclick="generateShareLink()">Generar Enlace</button>
+                            </div>
+                            <div id="share-link-display" class="share-display"></div>
+                        </div>
+                        <div class="mirage-option">
+                            <h4>🎭 Avatar - DynamicLabs.ai</h4>
+                            <div class="platform-controls">
+                                <button onclick="openDynamicLabs()">Abrir DynamicLabs.ai</button>
+                                <button onclick="extractDynamicAvatar()">Extraer Avatar</button>
+                                <button onclick="shareDynamicAvatar()">Compartir Avatar</button>
+                            </div>
+                            <div class="dynamic-avatar-section">
+                                <h5>Avatares de DynamicLabs</h5>
+                                <div class="avatar-options">
+                                    <select id="dynamic-avatar-type">
+                                        <option value="fancy-bears">Fancy Bears Metaverse</option>
+                                        <option value="trait-swap">Trait Swap NFT</option>
+                                        <option value="nft-plus">NFT Plus</option>
+                                        <option value="custom">Avatar Personalizado</option>
+                                    </select>
+                                    <input type="text" id="avatar-traits" placeholder="Rasgos del avatar (ej: gafas, sombrero, etc.)">
+                                    <button onclick="generateDynamicAvatar()">Generar Avatar</button>
+                                </div>
+                                <div id="dynamic-avatar-preview" class="avatar-preview"></div>
+                                <div class="avatar-actions">
+                                    <button onclick="downloadAvatar()">Descargar Avatar</button>
+                                    <button onclick="useInMirage()">Usar en Mirage</button>
+                                    <button onclick="shareAvatarLink()">Compartir Enlace</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Visor de Mundos Mirage -->
+                    <div class="mirage-viewer">
+                        <h4>🎬 Visor de Mundos Mirage</h4>
+                        <div id="mirage-world-viewer" class="world-viewer">
+                            <p>Selecciona o crea un mundo para visualizar</p>
+                        </div>
+                        <div class="viewer-controls">
+                            <button onclick="enterWorld()">🚪 Entrar al Mundo</button>
+                            <button onclick="recordWorldVideo()">📹 Grabar Video</button>
+                            <button onclick="takeScreenshot()">📸 Captura</button>
+                            <button onclick="exportWorld()">💾 Exportar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Búsqueda de URLs Personalizadas -->
+                <div class="platform-section">
+                    <h3>🔍 URLs Personalizadas para Mundos 3D</h3>
+                    <div class="world-search">
+                        <input type="url" id="custom-world-url" placeholder="URL personalizada del mundo 3D">
+                        <button onclick="validateWorldURL()">Validar URL</button>
+                        <button onclick="addCustomWorld()">Agregar Mundo</button>
+                    </div>
+                    
+                    <div class="world-library">
+                        <h4>Mundos 3D Disponibles</h4>
+                        <div id="worlds-grid" class="worlds-container"></div>
+                    </div>
+                </div>
+
+                <!-- Carga de Archivos 3D -->
+                <div class="platform-section">
+                    <h3>📁 Carga de Archivos 3D/VR/AR/XR</h3>
+                    <div class="upload-area" ondrop="handleFileDrop(event)" ondragover="handleDragOver(event)">
+                        <input type="file" id="3d-file-input" multiple accept=".obj,.fbx,.gltf,.glb,.vrm,.usd,.usda,.usdc" style="display: none;">
+                        <button onclick="document.getElementById('3d-file-input').click()">Seleccionar Archivos 3D</button>
+                        <p>Arrastra archivos aquí o haz clic para seleccionar</p>
+                        <p class="file-types">Formatos soportados: OBJ, FBX, GLTF, GLB, VRM, USD</p>
+                    </div>
+                    <div id="uploaded-files" class="uploaded-files-list"></div>
+                </div>
+            </section>
+
+            <!-- Sección 4: Avatares -->
+            <section id="avatars" class="content-section">
+                <h2>Importación de Avatares</h2>
+                <div class="avatar-upload">
+                    <div class="upload-area" ondrop="handleAvatarDrop(event)" ondragover="handleDragOver(event)">
+                        <input type="file" id="avatar-file-input" multiple accept=".vrm,.fbx,.obj,.gltf,.glb" style="display: none;">
+                        <button onclick="document.getElementById('avatar-file-input').click()">Seleccionar Avatares</button>
+                        <p>Arrastra avatares aquí o haz clic para seleccionar</p>
+                        <p class="file-types">Formatos soportados: VRM, FBX, OBJ, GLTF, GLB</p>
+                    </div>
+                </div>
+                
+                <div class="avatar-library">
+                    <h3>Avatares Importados</h3>
+                    <div id="avatars-grid" class="avatars-container"></div>
+                </div>
+
+                <div class="avatar-customization">
+                    <h3>Personalización de Avatar</h3>
+                    <div class="customization-controls">
+                        <label>Escala: <input type="range" id="avatar-scale" min="0.5" max="2" step="0.1" value="1"></label>
+                        <label>Rotación Y: <input type="range" id="avatar-rotation" min="0" max="360" step="1" value="0"></label>
+                        <button onclick="applyAvatarCustomization()">Aplicar Cambios</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 5: Libros Gemini -->
+            <section id="gemini-books" class="content-section">
+                <h2>Integración Específica de Gemini Storybook</h2>
+                <div class="gemini-integration">
+                    <div class="api-config">
+                        <h3>Configuración de API</h3>
+                        <input type="password" id="gemini-api-key" placeholder="Clave API de Gemini">
+                        <button onclick="testGeminiConnection()">Probar Conexión</button>
+                        <div id="gemini-status" class="api-status"></div>
+                    </div>
+
+                    <div class="book-generator">
+                        <h3>Generador de Libros</h3>
+                        <textarea id="book-prompt" placeholder="Describe el libro que quieres generar..." rows="4"></textarea>
+                        <div class="generation-options">
+                            <label>Género: 
+                                <select id="book-genre">
+                                    <option value="fantasy">Fantasía</option>
+                                    <option value="scifi">Ciencia Ficción</option>
+                                    <option value="mystery">Misterio</option>
+                                    <option value="romance">Romance</option>
+                                    <option value="adventure">Aventura</option>
+                                    <option value="educational">Educativo</option>
+                                </select>
+                            </label>
+                            <label>Longitud: 
+                                <select id="book-length">
+                                    <option value="short">Cuento Corto (1-5 páginas)</option>
+                                    <option value="medium">Historia Media (6-15 páginas)</option>
+                                    <option value="long">Libro Largo (16+ páginas)</option>
+                                </select>
+                            </label>
+                        </div>
+                        <button onclick="generateBook()">Generar Libro</button>
+                    </div>
+
+                    <div class="book-preview">
+                        <h3>Vista Previa del Libro</h3>
+                        <div id="book-content" class="book-display"></div>
+                        <div class="book-actions">
+                            <button onclick="editBook()">Editar</button>
+                            <button onclick="exportBook()">Exportar</button>
+                            <button onclick="saveToLibrary()">Guardar en Biblioteca</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 8: Editor de Libros -->
+            <section id="book-editor" class="content-section">
+                <h2>Editor Avanzado de Libros</h2>
+                
+                <!-- Selector de Formato Principal -->
+                <div class="format-selector">
+                    <h3>Formato de Edición</h3>
+                    <div class="format-options">
+                        <button class="format-btn active" onclick="selectFormat('cover')">Editar Portada</button>
+                        <button class="format-btn" onclick="selectFormat('text')">Editar Texto</button>
+                        <button class="format-btn" onclick="selectFormat('layout')">Maquetar</button>
+                    </div>
+                </div>
+
+                <!-- Editor de Portada -->
+                <div id="cover-editor" class="editor-section active">
+                    <h3>Diseño de Portada</h3>
+                    <div class="cover-designer">
+                        <div class="cover-preview">
+                            <div id="cover-canvas" class="cover-canvas">
+                                <div class="cover-title">Título del Libro</div>
+                                <div class="cover-author">Autor</div>
+                                <div class="cover-publisher">Editorial WC</div>
+                            </div>
+                        </div>
+                        <div class="cover-controls">
+                            <div class="control-group">
+                                <label>Título:</label>
+                                <input type="text" id="cover-title" placeholder="Título del libro" onchange="updateCoverPreview()">
+                            </div>
+                            <div class="control-group">
+                                <label>Autor:</label>
+                                <input type="text" id="cover-author" placeholder="Nombre del autor" onchange="updateCoverPreview()">
+                            </div>
+                            <div class="control-group">
+                                <label>Editorial:</label>
+                                <input type="text" id="cover-publisher" value="Editorial WC" onchange="updateCoverPreview()">
+                            </div>
+                            <div class="control-group">
+                                <label>Imagen de fondo:</label>
+                                <input type="file" id="cover-background" accept="image/*" onchange="updateCoverBackground()">
+                            </div>
+                            <div class="control-group template-selector">
+                                <label for="cover-style">Estilo de portada:</label>
+                                <select id="cover-style" 
+                                        class="selector-tooltip" 
+                                        data-tooltip="Selecciona el estilo visual para tu portada"
+                                        aria-describedby="cover-style-help"
+                                        onchange="applyCoverStyle()">
+                                    <option value="classic">📚 Clásico - Elegante y tradicional</option>
+                                    <option value="modern">🎨 Moderno - Contemporáneo y vibrante</option>
+                                    <option value="minimalist">✨ Minimalista - Limpio y simple</option>
+                                    <option value="artistic">🎭 Artístico - Creativo y expresivo</option>
+                                </select>
+                                <div class="selector-status" aria-hidden="true"></div>
+                                <small id="cover-style-help" class="form-text">Cada estilo aplica diferentes colores, fuentes y efectos visuales</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editor de Texto -->
+                <div id="text-editor" class="editor-section">
+                    <h3>Editor de Texto Avanzado</h3>
+                    <div class="text-editor-container">
+                        <div class="text-toolbar">
+                            <button onclick="formatText('bold')"><b>B</b></button>
+                            <button onclick="formatText('italic')"><i>I</i></button>
+                            <button onclick="formatText('underline')"><u>U</u></button>
+                            <select id="font-family" 
+                                    class="selector-tooltip" 
+                                    data-tooltip="Selecciona la familia de fuente para el texto"
+                                    aria-label="Familia de fuente"
+                                    onchange="changeFont()">
+                                <option value="Arial">Arial - Sans-serif moderna</option>
+                                <option value="Times New Roman">Times New Roman - Serif clásica</option>
+                                <option value="Calibri">Calibri - Sans-serif suave</option>
+                                <option value="Georgia">Georgia - Serif legible</option>
+                                <option value="Helvetica">Helvetica - Sans-serif profesional</option>
+                            </select>
+                            <select id="font-size" 
+                                    class="selector-tooltip" 
+                                    data-tooltip="Ajusta el tamaño del texto"
+                                    aria-label="Tamaño de fuente"
+                                    onchange="changeFontSize()">
+                                <option value="8">8pt - Muy pequeño</option>
+                                <option value="10">10pt - Pequeño</option>
+                                <option value="12" selected>12pt - Normal</option>
+                                <option value="14">14pt - Grande</option>
+                                <option value="16">16pt - Muy grande</option>
+                                <option value="18">18pt - Extra grande</option>
+                                <option value="24">24pt - Título</option>
+                            </select>
+                            <select id="line-spacing" 
+                                    class="selector-tooltip" 
+                                    data-tooltip="Controla el espaciado entre líneas"
+                                    aria-label="Espaciado de línea"
+                                    onchange="changeLineSpacing()">
+                                <option value="1">Sencillo - Compacto</option>
+                                <option value="1.15">1.15 - Ligeramente espaciado</option>
+                                <option value="1.5" selected>1.5 - Espaciado cómodo</option>
+                                <option value="2">Doble - Muy espaciado</option>
+                                <option value="2.5">2.5 - Extra espaciado</option>
+                            </select>
+                            <button onclick="alignText('left')">←</button>
+                            <button onclick="alignText('center')">↔</button>
+                            <button onclick="alignText('right')">→</button>
+                            <button onclick="alignText('justify')">≡</button>
+                        </div>
+                        <div id="text-content" class="text-content" contenteditable="true">
+                            <p>Comienza a escribir tu libro aquí...</p>
+                        </div>
+                        <div class="text-options">
+                            <button onclick="extractTextToExternal()">Extraer a Programa Externo</button>
+                            <button onclick="importTextFromExternal()">Importar Texto</button>
+                            <button onclick="autoFormatText()">Formato Automático</button>
+                            <button onclick="optimizeImages()">Optimizar Imágenes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editor de Maquetación -->
+                <div id="layout-editor" class="editor-section">
+                    <h3>Maquetación Profesional</h3>
+                    <div class="layout-container">
+                        <div class="layout-controls">
+                            <div class="control-group template-selector">
+                                <label for="page-format">Formato de página:</label>
+                                <select id="page-format" 
+                                        class="selector-tooltip" 
+                                        data-tooltip="Selecciona el tamaño estándar de página"
+                                        aria-describedby="page-format-help"
+                                        onchange="updatePageFormat()">
+                                    <option value="a4">📄 A4 (210×297mm) - Estándar internacional</option>
+                                    <option value="a5">📖 A5 (148×210mm) - Libro pequeño</option>
+                                    <option value="letter">📋 Carta (216×279mm) - Estándar US</option>
+                                    <option value="legal">📜 Legal (216×356mm) - Documento largo</option>
+                                    <option value="custom">⚙️ Personalizado - Dimensiones propias</option>
+                                </select>
+                                <small id="page-format-help" class="form-text">El formato afecta las proporciones y el diseño final</small>
+                            </div>
+                            <div class="control-group template-selector">
+                                <label for="page-orientation">Orientación:</label>
+                                <select id="page-orientation" 
+                                        class="selector-tooltip" 
+                                        data-tooltip="Cambia entre vertical y horizontal"
+                                        aria-describedby="orientation-help"
+                                        onchange="updatePageOrientation()">
+                                    <option value="portrait">📱 Vertical - Más alto que ancho</option>
+                                    <option value="landscape">📺 Horizontal - Más ancho que alto</option>
+                                </select>
+                                <small id="orientation-help" class="form-text">La orientación determina cómo se lee el contenido</small>
+                            </div>
+                            <div class="control-group template-selector">
+                                <label for="content-start">Inicio del contenido:</label>
+                                <select id="content-start" 
+                                        class="selector-tooltip" 
+                                        data-tooltip="Define dónde comienza el contenido principal"
+                                        aria-describedby="content-start-help"
+                                        onchange="updateContentStart()">
+                                    <option value="right">➡️ Página derecha - Tradicional</option>
+                                    <option value="left">⬅️ Página izquierda - Alternativo</option>
+                                    <option value="back">🔄 Reverso de portada - Inmediato</option>
+                                </select>
+                                <small id="content-start-help" class="form-text">Controla la disposición inicial del contenido</small>
+                            </div>
+                            <div class="control-group">
+                                <label>Márgenes (mm):</label>
+                                <div class="margin-inputs">
+                                    <input type="number" id="margin-top" placeholder="Superior" value="25">
+                                    <input type="number" id="margin-bottom" placeholder="Inferior" value="25">
+                                    <input type="number" id="margin-left" placeholder="Izquierdo" value="30">
+                                    <input type="number" id="margin-right" placeholder="Derecho" value="25">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label>
+                                    <input type="checkbox" id="include-credits" checked onchange="toggleCreditsPage()">
+                                    Incluir página de créditos
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Vista previa de maquetación -->
+                        <div class="layout-preview">
+                            <h4>Vista Previa de Maquetación</h4>
+                            <div id="page-preview" class="page-preview-container">
+                                <!-- Las páginas se generarán dinámicamente aquí -->
+                            </div>
+                            <div class="page-controls">
+                                <button onclick="addBlankPage()">Añadir Página en Blanco</button>
+                                <button onclick="removeLastPage()">Eliminar Última Página</button>
+                                <button onclick="reorderPages()">Reordenar Páginas</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Editor de Página de Créditos -->
+                    <div id="credits-editor" class="credits-editor">
+                        <h4>Página de Créditos e Información Legal</h4>
+                        <div class="credits-form">
+                            <div class="form-row">
+                                <label>ISBN:</label>
+                                <input type="text" id="isbn" placeholder="978-84-XXXXX-XX-X">
+                            </div>
+                            <div class="form-row">
+                                <label>Tiraje:</label>
+                                <input type="number" id="print-run" placeholder="1000">
+                            </div>
+                            <div class="form-row">
+                                <label>Fecha de edición:</label>
+                                <input type="date" id="edition-date">
+                            </div>
+                            <div class="form-row">
+                                <label>Editorial:</label>
+                                <input type="text" id="publisher-name" value="Editorial WC">
+                            </div>
+                            <div class="form-row">
+                                <label>Imprenta:</label>
+                                <input type="text" id="printer-name" placeholder="Nombre de la imprenta">
+                            </div>
+                            <div class="form-row">
+                                <label>Dedicatoria:</label>
+                                <textarea id="dedication" placeholder="Dedicatoria personalizada..."></textarea>
+                            </div>
+                            <div class="form-row">
+                                <label>Copyright:</label>
+                                <textarea id="copyright-text" placeholder="© 2025 Autor. Todos los derechos reservados."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enlaces Externos -->
+                <div class="external-links">
+                    <h3>Herramientas Externas de Edición</h3>
+                    <div class="external-options">
+                        <div class="external-option">
+                            <h4>E-book</h4>
+                            <p>Editor gratuito de libros electrónicos</p>
+                            <button onclick="openExternalEditor('ebook')">Abrir Editor E-book</button>
+                        </div>
+                        <div class="external-option">
+                            <h4>Tirada</h4>
+                            <p>Gestión de tiradas y publicaciones</p>
+                            <button onclick="openExternalEditor('tirada')">Gestionar Tirada</button>
+                        </div>
+                        <div class="external-option">
+                            <h4>Otras Herramientas</h4>
+                            <p>Herramientas adicionales de edición</p>
+                            <button onclick="openExternalEditor('otras')">Más Herramientas</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exportación y Guardado -->
+                <div class="export-section">
+                    <h3>Exportar y Guardar</h3>
+                    <div class="export-options">
+                        <div class="export-formats">
+                            <h4>Formatos de Exportación</h4>
+                            <button onclick="exportBook('pdf')">Exportar PDF</button>
+                            <button onclick="exportBook('epub')">Exportar ePub</button>
+                            <button onclick="exportBook('mobi')">Exportar MOBI</button>
+                            <button onclick="exportBook('docx')">Exportar DOCX</button>
+                            <button onclick="exportBook('html')">Exportar HTML</button>
+                        </div>
+                        <div class="save-options">
+                            <h4>Guardar en Base de Datos</h4>
+                            <input type="text" id="book-project-name" placeholder="Nombre del proyecto">
+                            <button onclick="saveBookProject()">Guardar Proyecto</button>
+                            <button onclick="loadBookProject()">Cargar Proyecto</button>
+                            <button onclick="listBookProjects()">Listar Proyectos</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proyectos Guardados -->
+                <div id="saved-projects" class="saved-projects">
+                    <h4>Proyectos Guardados</h4>
+                    <div id="projects-list" class="projects-list"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Panel de Estado Global -->
+        <aside class="status-panel">
+            <h3>Estado del Sistema</h3>
+            <div id="system-status" class="status-indicators">
+                <div class="status-item">
+                    <span class="status-label">Conexión:</span>
+                    <span class="status-value" id="connection-status">Conectado</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Caché:</span>
+                    <span class="status-value" id="cache-status">Activo</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">APIs:</span>
+                    <span class="status-value" id="api-status">Listo</span>
+                </div>
+            </div>
+            
+            <div class="quick-actions">
+                <h4>Acciones Rápidas</h4>
+                <button onclick="clearAllCache()">Limpiar Todo el Caché</button>
+                <button onclick="exportAllData()">Exportar Todos los Datos</button>
+                <button onclick="resetSystem()">Reiniciar Sistema</button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Ventana Circular de Consentimiento de Cookies -->
+    <div id="cookie-consent-overlay" class="cookie-consent-overlay">
+        <div id="cookie-consent-circle" class="cookie-consent-circle">
+            <button id="close-consent" class="close-consent" aria-label="Cerrar">×</button>
+            <div class="consent-content">
+                <p>Al navegar aceptas nuestras 
+                    <a href="http://maxxine.net/cookies" target="_blank">Cookies</a>, 
+                    <a href="http://maxxine.net/terminos" target="_blank">Términos</a>, 
+                    <a href="http://maxxine.net/politicas" target="_blank">Políticas</a> y 
+                    <a href="http://maxxine.net/lascondiciones/deleditor.html" target="_blank">Condiciones</a>
+                </p>
+                <div class="voice-controls">
+                    <button id="voice-mic" class="voice-mic" aria-label="Activar/Desactivar micrófono">🎤</button>
+                    <button id="voice-toggle" class="voice-toggle" aria-label="Activar navegación por voz">✓</button>
+                </div>
+                <button id="accept-consent" class="accept-consent">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ventana de Navegación por Voz -->
+    <div id="voice-navigation-overlay" class="voice-navigation-overlay hidden">
+        <div id="voice-navigation-circle" class="voice-navigation-circle">
+            <button id="close-voice-nav" class="close-voice-nav" aria-label="Cerrar">×</button>
+            <button id="minimize-voice-nav" class="minimize-voice-nav" aria-label="Minimizar">□</button>
+            <div class="voice-nav-content">
+                <h3>🎙️ Navegación por Voz</h3>
+                <div class="voice-status">
+                    <span id="voice-status-text">Listo para escuchar...</span>
+                </div>
+                <div class="voice-input-display">
+                    <input type="text" id="voice-input-text" placeholder="Di una carpeta o escribe aquí..." />
+                </div>
+                <div class="voice-controls-nav">
+                    <button id="voice-mic-nav" class="voice-mic-nav active" aria-label="Micrófono">🎤</button>
+                    <button id="voice-toggle-nav" class="voice-toggle-nav active" aria-label="Reconocimiento activo">✓</button>
+                    <button id="voice-clone-nav" class="voice-clone-nav" aria-label="Clonar Voz">🎭</button>
+                    <button id="voice-read-nav" class="voice-read-nav" aria-label="Leer Texto">📖</button>
+                </div>
+                
+                <!-- Sección de Clonación de Voz en Navegación -->
+                <div id="voice-nav-clone-section" class="voice-nav-clone-section" style="display: none;">
+                    <h4>🎭 Clonación de Voz Rápida</h4>
+                    <div class="voice-nav-clone-options">
+                        <button onclick="quickOpenChatterbox()" class="btn-quick-clone">
+                            🚀 Chatterbox HF
+                        </button>
+                        <button onclick="quickChatterboxLocal()" class="btn-quick-local">
+                            💻 Uso Local
+                        </button>
+                        <button onclick="quickCustomVoice()" class="btn-quick-custom">
+                            ⚙️ Personalizar
+                        </button>
+                    </div>
+                    <div class="voice-nav-features">
+                        <small>✨ 23 idiomas • 🎯 Zero-shot • 🎭 Control emocional</small>
+                    </div>
+                </div>
+                
+                <!-- Controles de Lectura TTS -->
+                <div id="voice-nav-tts-section" class="voice-nav-tts-section" style="display: none;">
+                    <h4>📖 Lectura de Texto</h4>
+                    <div class="voice-nav-tts-controls">
+                        <button onclick="startQuickReading()" class="btn-tts-control">
+                            ▶️ Leer
+                        </button>
+                        <button onclick="pauseQuickReading()" class="btn-tts-control">
+                            ⏸️ Pausa
+                        </button>
+                        <button onclick="stopQuickReading()" class="btn-tts-control">
+                            ⏹️ Parar
+                        </button>
+                    </div>
+                    <div class="voice-nav-tts-settings">
+                        <label>Velocidad:</label>
+                        <input type="range" id="tts-speed-nav" min="0.5" max="2" step="0.1" value="1">
+                        <label>Tono:</label>
+                        <input type="range" id="tts-pitch-nav" min="0" max="2" step="0.1" value="1">
+                    </div>
+                </div>
+                
+                <div class="voice-commands">
+                    <small>Comandos: "voz", "cookies", "términos", "políticas", "condiciones", "dictar", "leer", "clonar"</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de detección de entorno y almacenamiento híbrido -->
+    <script src="environment_detector.js"></script>
+    <script src="hybrid_storage.js"></script>
+    <script src="offline_manager.js"></script>
+    
+    <!-- Scripts principales -->
+    <script src="script.js"></script>
+    <script src="voice_navigation.js"></script>
+    <script src="cookie_consent.js"></script>
+    <script src="cover_templates.js"></script>
+    <script src="layout_templates.js"></script>
+    <script src="api_integration.js"></script>
+</body>
+</html>
+
