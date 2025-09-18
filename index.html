@@ -2,13 +2,18 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#4facfe">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Editor de Mundos - Integración de Contenido Externo</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="voice_styles.css">
     <link rel="stylesheet" href="cover_styles.css">
     <link rel="stylesheet" href="layout_styles.css">
     <link rel="stylesheet" href="api_styles.css">
+    <link rel="stylesheet" href="mobile_improvements.css">
 </head>
 <body>
     <div class="container">
@@ -18,16 +23,18 @@
         </header>
 
         <nav class="navigation">
-            <but            <button class="nav-btn" data-section="url-analyzer">Analizar URLs</button>
-            <button class="nav-btn" data-section="navigation-cache">Navegación</button>
-            <button class="nav-btn" data-section="gemini-storybook">Gemini Storybook</button>
-            <button class="nav-btn" data-section="genie3-navigation">Genie3</button>
-            <button class="nav-btn" data-section="video-selection">Videos</button>
-            <button class="nav-btn" data-section="world-control">Mundos</button>
-            <button class="nav-btn" data-section="resumen-tools">Resumen</button>
-            <button class="nav-btn" data-section="presentation-generator">Presentaciones</button>
-            <button class="nav-btn" data-section="content-importer">Importar</button>
-            <button class="nav-btn" data-section="book-editor">Editar</button>utton>
+            <div class="nav-buttons">
+                <button class="nav-btn" data-section="url-analyzer">Analizar URLs</button>
+                <button class="nav-btn" data-section="navigation-cache">Navegación</button>
+                <button class="nav-btn" data-section="gemini-storybook">Gemini Storybook</button>
+                <button class="nav-btn" data-section="genie3-navigation">Genie3</button>
+                <button class="nav-btn" data-section="video-selection">Videos</button>
+                <button class="nav-btn" data-section="world-control">Mundos</button>
+                <button class="nav-btn" data-section="resumen-tools">Resumen</button>
+                <button class="nav-btn" data-section="presentation-generator">Presentaciones</button>
+                <button class="nav-btn" data-section="content-importer">Importar</button>
+                <button class="nav-btn" data-section="book-editor">Editar</button>
+            </div>
             <button class="nav-btn help-btn" onclick="openHelpPage()">❓ Ayuda</button>
         </nav>
 
@@ -850,6 +857,9 @@
     <script src="cover_templates.js"></script>
     <script src="layout_templates.js"></script>
     <script src="api_integration.js"></script>
+    
+    <!-- Mejoras para móvil y responsive -->
+    <script src="mobile_improvements.js"></script>
 </body>
 </html>
 
