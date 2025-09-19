@@ -1,4 +1,4 @@
-# Editor de Mundos v6.0 - GitHub Codespaces Edition
+# Editor de Mundos v6.6.6 - GitHub Codespaces Edition
 
 ## 🚀 Inicio Rápido en Codespaces
 
