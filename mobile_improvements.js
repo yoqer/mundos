@@ -1,81 +1,246 @@
-// === MEJORAS PARA MÓVIL Y GESTIÓN DE COOKIES ===
+// === MEJORAS ESPECÍFICAS PARA MÓVIL ===
 
 class MobileImprovements {
     constructor() {
+        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         this.init();
     }
     
     init() {
-        this.setupResponsiveHandlers();
-        this.improveCookieManagement();
+        this.setupMobileDetection();
+        this.forceCloseButtons();
+        this.setupMinimizeButtons();
+        this.ensureContentVisibility();
         this.setupTouchOptimizations();
-        this.setupModalImprovements();
-        this.setupAccessibilityFeatures();
+        this.handleCookieManagement();
     }
     
-    setupResponsiveHandlers() {
-        // Detectar dispositivo móvil
-        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        this.isTablet = /iPad|Android(?=.*\bMobile\b)/i.test(navigator.userAgent);
-        
-        // Añadir clases CSS según dispositivo
+    setupMobileDetection() {
         document.body.classList.add(this.isMobile ? 'mobile-device' : 'desktop-device');
-        if (this.isTablet) document.body.classList.add('tablet-device');
         
-        // Manejar cambios de orientación
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => {
-                this.handleOrientationChange();
-            }, 100);
+        // Forzar que el contenido sea visible en móvil
+        if (this.isMobile) {
+            document.body.classList.add('mobile-content-visible');
+        }
+    }
+    
+    forceCloseButtons() {
+        // Buscar todos los modales y añadir botones X funcionales
+        const modals = document.querySelectorAll('.cookie-consent-overlay, .voice-navigation-overlay, .modal, [class*="overlay"]');
+        
+        modals.forEach(modal => {
+            this.addFunctionalCloseButton(modal);
         });
         
-        // Manejar resize
-        window.addEventListener('resize', this.debounce(() => {
-            this.handleResize();
-        }, 250));
+        // Observer para modales que se crean dinámicamente
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) {
+                        if (node.classList && (node.classList.contains('overlay') || node.classList.contains('modal'))) {
+                            this.addFunctionalCloseButton(node);
+                        }
+                        // Buscar dentro del nodo añadido
+                        const innerModals = node.querySelectorAll && node.querySelectorAll('.cookie-consent-overlay, .voice-navigation-overlay, .modal, [class*="overlay"]');
+                        if (innerModals) {
+                            innerModals.forEach(innerModal => this.addFunctionalCloseButton(innerModal));
+                        }
+                    }
+                });
+            });
+        });
+        
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
     }
     
-    improveCookieManagement() {
-        // Mejorar gestión de cookies
-        const cookieOverlay = document.querySelector('.cookie-consent-overlay');
-        const cookieText = document.querySelector('.cookie-text');
+    addFunctionalCloseButton(modal) {
+        // Remover botones X existentes que no funcionen
+        const existingCloseButtons = modal.querySelectorAll('.close-button, .modal-close, [data-action="close"]');
+        existingCloseButtons.forEach(btn => {
+            if (!btn.classList.contains('functional-close')) {
+                btn.remove();
+            }
+        });
         
-        if (cookieOverlay) {
-            // Añadir botón de cerrar mejorado
-            this.addImprovedCloseButton(cookieOverlay);
-            
-            // Manejar aceptación de cookies
-            const acceptButtons = cookieOverlay.querySelectorAll('[data-action="accept"], .accept-button, button[onclick*="accept"]');
-            acceptButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    this.hideCookieElements();
-                });
-            });
-            
-            // Manejar rechazo de cookies
-            const rejectButtons = cookieOverlay.querySelectorAll('[data-action="reject"], .reject-button, button[onclick*="reject"]');
-            rejectButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    this.hideCookieElements();
-                });
-            });
+        // Crear botón X funcional
+        const closeButton = document.createElement('button');
+        closeButton.className = 'close-button functional-close';
+        closeButton.innerHTML = '×';
+        closeButton.setAttribute('aria-label', 'Cerrar');
+        closeButton.style.cssText = `
+            position: absolute !important;
+            top: 8px !important;
+            right: 8px !important;
+            width: 36px !important;
+            height: 36px !important;
+            border: none !important;
+            background: rgba(255, 0, 0, 0.8) !important;
+            color: white !important;
+            border-radius: 50% !important;
+            font-size: 18px !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 10001 !important;
+            transition: all 0.3s ease !important;
+            line-height: 1 !important;
+            touch-action: manipulation !important;
+        `;
+        
+        // Evento de cierre funcional
+        closeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.closeModal(modal);
+        });
+        
+        closeButton.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.closeModal(modal);
+        });
+        
+        // Añadir al modal
+        modal.appendChild(closeButton);
+        
+        // Cerrar con Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isModalVisible(modal)) {
+                this.closeModal(modal);
+            }
+        });
+        
+        // Cerrar al tocar fuera
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                this.closeModal(modal);
+            }
+        });
+    }
+    
+    setupMinimizeButtons() {
+        // Añadir botones de minimizar a extensiones de voz
+        const voiceModals = document.querySelectorAll('.voice-navigation-overlay, [class*="voice"]');
+        
+        voiceModals.forEach(modal => {
+            const voiceCircle = modal.querySelector('.voice-navigation-circle');
+            if (voiceCircle && !voiceCircle.querySelector('.minimize-button')) {
+                this.addMinimizeButton(voiceCircle);
+            }
+        });
+    }
+    
+    addMinimizeButton(voiceCircle) {
+        const minimizeButton = document.createElement('button');
+        minimizeButton.className = 'minimize-button';
+        minimizeButton.innerHTML = '−';
+        minimizeButton.setAttribute('aria-label', 'Minimizar');
+        minimizeButton.style.cssText = `
+            position: absolute !important;
+            top: 8px !important;
+            left: 8px !important;
+            width: 36px !important;
+            height: 36px !important;
+            border: none !important;
+            background: rgba(0, 123, 255, 0.8) !important;
+            color: white !important;
+            border-radius: 50% !important;
+            font-size: 14px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 10001 !important;
+            transition: all 0.3s ease !important;
+            touch-action: manipulation !important;
+        `;
+        
+        minimizeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.minimizeVoiceExtension(voiceCircle);
+        });
+        
+        minimizeButton.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.minimizeVoiceExtension(voiceCircle);
+        });
+        
+        voiceCircle.appendChild(minimizeButton);
+    }
+    
+    minimizeVoiceExtension(voiceCircle) {
+        voiceCircle.classList.add('minimized');
+        
+        // Hacer que el círculo minimizado sea clickeable para expandir
+        voiceCircle.addEventListener('click', (e) => {
+            if (voiceCircle.classList.contains('minimized')) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.expandVoiceExtension(voiceCircle);
+            }
+        });
+    }
+    
+    expandVoiceExtension(voiceCircle) {
+        voiceCircle.classList.remove('minimized');
+    }
+    
+    closeModal(modal) {
+        // Múltiples métodos para asegurar que se cierre
+        modal.classList.add('hidden', 'mobile-hidden', 'hiding');
+        modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
+        modal.style.opacity = '0';
+        modal.style.pointerEvents = 'none';
+        
+        // Si es modal de cookies, ejecutar lógica específica
+        if (modal.classList.contains('cookie-consent-overlay') || modal.innerHTML.includes('cookie')) {
+            this.hideCookieElements();
         }
+        
+        // Remover clase modal-open del body
+        document.body.classList.remove('mobile-modal-open');
+        document.body.classList.add('mobile-content-visible');
+        
+        // Asegurar que el contenido principal sea visible
+        setTimeout(() => {
+            this.ensureContentVisibility();
+        }, 100);
+    }
+    
+    isModalVisible(modal) {
+        return modal.style.display !== 'none' && 
+               !modal.classList.contains('hidden') && 
+               !modal.classList.contains('mobile-hidden');
     }
     
     hideCookieElements() {
-        // Ocultar overlay de cookies
-        const cookieOverlay = document.querySelector('.cookie-consent-overlay');
-        if (cookieOverlay) {
-            cookieOverlay.classList.add('hidden');
-            cookieOverlay.style.display = 'none';
-        }
+        // Ocultar todos los elementos relacionados con cookies
+        const cookieElements = document.querySelectorAll(
+            '.cookie-consent-overlay, .cookie-text, .cookie-notice, [class*="cookie"]'
+        );
         
-        // Ocultar texto de cookies
-        const cookieTexts = document.querySelectorAll('.cookie-text, .cookie-notice, [class*="cookie"]');
-        cookieTexts.forEach(element => {
-            if (element.textContent.toLowerCase().includes('cookie') || 
-                element.textContent.toLowerCase().includes('navegar')) {
+        cookieElements.forEach(element => {
+            element.classList.add('hidden', 'mobile-hidden');
+            element.style.display = 'none';
+        });
+        
+        // Ocultar texto específico de navegación y cookies
+        const textElements = document.querySelectorAll('*');
+        textElements.forEach(element => {
+            if (element.textContent && 
+                (element.textContent.toLowerCase().includes('al navegar aceptas') ||
+                 element.textContent.toLowerCase().includes('cookies') ||
+                 element.textContent.toLowerCase().includes('términos'))) {
                 element.classList.add('cookie-text-hidden');
+                element.style.display = 'none';
             }
         });
         
@@ -84,55 +249,48 @@ class MobileImprovements {
         localStorage.setItem('cookiesHandled', Date.now().toString());
     }
     
-    addImprovedCloseButton(modal) {
-        // Verificar si ya existe un botón de cerrar
-        let closeButton = modal.querySelector('.close-button, .modal-close, [data-action="close"]');
+    ensureContentVisibility() {
+        // Forzar que el contenido principal sea visible
+        const container = document.querySelector('.container');
+        const main = document.querySelector('.main');
+        const navigation = document.querySelector('.navigation, .nav');
         
-        if (!closeButton) {
-            closeButton = document.createElement('button');
-            closeButton.className = 'close-button';
-            closeButton.innerHTML = '×';
-            closeButton.setAttribute('aria-label', 'Cerrar');
-            modal.appendChild(closeButton);
+        if (container) {
+            container.style.display = 'grid';
+            container.style.visibility = 'visible';
+            container.style.opacity = '1';
+            container.style.zIndex = '1';
         }
         
-        // Mejorar funcionalidad del botón de cerrar
-        closeButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.closeModal(modal);
-        });
-        
-        // Cerrar con tecla Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                this.closeModal(modal);
-            }
-        });
-        
-        // Cerrar al hacer click fuera del modal
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                this.closeModal(modal);
-            }
-        });
-    }
-    
-    closeModal(modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-        
-        // Si es el modal de cookies, ejecutar lógica de cookies
-        if (modal.classList.contains('cookie-consent-overlay')) {
-            this.hideCookieElements();
+        if (main) {
+            main.style.display = 'block';
+            main.style.visibility = 'visible';
+            main.style.opacity = '1';
+            main.style.zIndex = '2';
         }
+        
+        if (navigation) {
+            navigation.style.display = 'block';
+            navigation.style.visibility = 'visible';
+            navigation.style.opacity = '1';
+            navigation.style.zIndex = '2';
+        }
+        
+        // Mostrar todas las secciones
+        const sections = document.querySelectorAll('.section, [class*="section"]');
+        sections.forEach(section => {
+            if (!section.classList.contains('hidden')) {
+                section.style.display = 'block';
+                section.style.visibility = 'visible';
+            }
+        });
     }
     
     setupTouchOptimizations() {
         // Mejorar experiencia táctil
         document.addEventListener('touchstart', () => {}, { passive: true });
         
-        // Prevenir zoom accidental en inputs
+        // Prevenir zoom accidental
         const inputs = document.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
             if (input.type !== 'range') {
@@ -141,135 +299,61 @@ class MobileImprovements {
         });
         
         // Mejorar scroll en modales
-        const modals = document.querySelectorAll('.cookie-consent-overlay, .voice-navigation-overlay, .modal');
-        modals.forEach(modal => {
-            modal.style.webkitOverflowScrolling = 'touch';
+        const scrollableElements = document.querySelectorAll(
+            '.cookie-consent-circle, .voice-navigation-circle, .modal-content'
+        );
+        scrollableElements.forEach(element => {
+            element.style.webkitOverflowScrolling = 'touch';
+            element.style.overflowY = 'auto';
         });
     }
     
-    setupModalImprovements() {
-        // Mejorar todos los modales para móvil
-        const modals = document.querySelectorAll('.cookie-consent-overlay, .voice-navigation-overlay, .modal, [class*="overlay"]');
-        
-        modals.forEach(modal => {
-            // Añadir botón de cerrar mejorado
-            this.addImprovedCloseButton(modal);
-            
-            // Mejorar posicionamiento en móvil
-            if (this.isMobile) {
-                modal.style.position = 'fixed';
-                modal.style.top = '0';
-                modal.style.left = '0';
-                modal.style.right = '0';
-                modal.style.bottom = '0';
-                modal.style.zIndex = '10000';
-                modal.style.display = modal.style.display || 'flex';
-                modal.style.alignItems = 'center';
-                modal.style.justifyContent = 'center';
-                modal.style.padding = '1rem';
-            }
-            
-            // Mejorar contenido del modal
-            const modalContent = modal.querySelector('.cookie-consent-circle, .voice-navigation-circle, .modal-content');
-            if (modalContent && this.isMobile) {
-                modalContent.style.maxWidth = '90vw';
-                modalContent.style.maxHeight = '80vh';
-                modalContent.style.overflow = 'auto';
-                modalContent.style.webkitOverflowScrolling = 'touch';
-                modalContent.style.borderRadius = '20px';
-                modalContent.style.position = 'relative';
-            }
-        });
-    }
-    
-    setupAccessibilityFeatures() {
-        // Mejorar accesibilidad en móvil
-        
-        // Añadir indicadores de focus visibles
-        const focusableElements = document.querySelectorAll('button, input, select, textarea, a[href]');
-        focusableElements.forEach(element => {
-            element.addEventListener('focus', () => {
-                element.style.outline = '2px solid #007AFF';
-                element.style.outlineOffset = '2px';
-            });
-            
-            element.addEventListener('blur', () => {
-                element.style.outline = '';
-                element.style.outlineOffset = '';
-            });
-        });
-        
-        // Mejorar navegación por teclado
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-        
-        document.addEventListener('mousedown', () => {
-            document.body.classList.remove('keyboard-navigation');
-        });
-    }
-    
-    handleOrientationChange() {
-        // Manejar cambios de orientación
-        const modals = document.querySelectorAll('.cookie-consent-overlay, .voice-navigation-overlay');
-        modals.forEach(modal => {
-            if (!modal.classList.contains('hidden')) {
-                // Reajustar modal después del cambio de orientación
-                setTimeout(() => {
-                    const modalContent = modal.querySelector('.cookie-consent-circle, .voice-navigation-circle');
-                    if (modalContent) {
-                        modalContent.style.maxHeight = '80vh';
-                    }
-                }, 200);
-            }
-        });
-    }
-    
-    handleResize() {
-        // Manejar cambios de tamaño de ventana
-        const currentIsMobile = window.innerWidth <= 768;
-        
-        if (currentIsMobile !== this.isMobile) {
-            this.isMobile = currentIsMobile;
-            document.body.classList.toggle('mobile-device', this.isMobile);
-            document.body.classList.toggle('desktop-device', !this.isMobile);
-            
-            // Reconfigurar modales
-            this.setupModalImprovements();
+    handleCookieManagement() {
+        // Si las cookies ya fueron aceptadas, ocultarlas inmediatamente
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            setTimeout(() => {
+                this.hideCookieElements();
+            }, 100);
         }
+        
+        // Manejar botones de aceptar/rechazar cookies
+        const acceptButtons = document.querySelectorAll(
+            '[data-action="accept"], .accept-button, button[onclick*="accept"], [class*="accept"]'
+        );
+        const rejectButtons = document.querySelectorAll(
+            '[data-action="reject"], .reject-button, button[onclick*="reject"], [class*="reject"]'
+        );
+        
+        acceptButtons.forEach(button => {
+            button.addEventListener('click', () => this.hideCookieElements());
+            button.addEventListener('touchend', () => this.hideCookieElements());
+        });
+        
+        rejectButtons.forEach(button => {
+            button.addEventListener('click', () => this.hideCookieElements());
+            button.addEventListener('touchend', () => this.hideCookieElements());
+        });
     }
     
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
+    // Métodos públicos
+    static forceCloseAllModals() {
+        const instance = window.mobileImprovements || new MobileImprovements();
+        const modals = document.querySelectorAll('.cookie-consent-overlay, .voice-navigation-overlay, .modal, [class*="overlay"]');
+        modals.forEach(modal => instance.closeModal(modal));
     }
     
-    // Método público para ocultar cookies manualmente
+    static showContent() {
+        const instance = window.mobileImprovements || new MobileImprovements();
+        instance.ensureContentVisibility();
+    }
+    
     static hideCookies() {
         const instance = window.mobileImprovements || new MobileImprovements();
         instance.hideCookieElements();
     }
-    
-    // Método público para cerrar modal específico
-    static closeModal(modalSelector) {
-        const modal = document.querySelector(modalSelector);
-        if (modal) {
-            const instance = window.mobileImprovements || new MobileImprovements();
-            instance.closeModal(modal);
-        }
-    }
 }
 
-// Inicializar mejoras móviles cuando el DOM esté listo
+// Inicializar inmediatamente
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         window.mobileImprovements = new MobileImprovements();
@@ -278,16 +362,18 @@ if (document.readyState === 'loading') {
     window.mobileImprovements = new MobileImprovements();
 }
 
-// Verificar si las cookies ya fueron aceptadas
+// Verificar cookies aceptadas al cargar
 if (localStorage.getItem('cookiesAccepted') === 'true') {
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            if (window.mobileImprovements) {
-                window.mobileImprovements.hideCookieElements();
-            }
-        }, 100);
-    });
+    setTimeout(() => {
+        MobileImprovements.hideCookies();
+        MobileImprovements.showContent();
+    }, 500);
 }
+
+// Forzar visibilidad del contenido después de 2 segundos
+setTimeout(() => {
+    MobileImprovements.showContent();
+}, 2000);
 
 // Exportar para uso global
 window.MobileImprovements = MobileImprovements;
