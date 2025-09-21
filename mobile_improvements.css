@@ -1,22 +1,302 @@
-/* === CORRECCIONES ESPECÍFICAS PARA MÓVIL === */
+/* === INTERFAZ MÓVIL CIRCULAR MEJORADA === */
 
-/* Asegurar que la APP completa se vea en móvil */
+/* Interfaz circular en la parte inferior para móvil */
 @media (max-width: 768px) {
-    /* Forzar que todos los overlays sean ocultables */
+    /* Ocultar overlays por defecto y mostrar interfaz circular */
     .cookie-consent-overlay,
     .voice-navigation-overlay {
+        display: none !important;
+    }
+    
+    /* Interfaz circular flotante en la parte inferior */
+    .mobile-circular-interface {
         position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 280px !important;
+        height: 60px !important;
+        background: rgba(74, 172, 254, 0.95) !important;
+        border-radius: 30px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-around !important;
+        padding: 0 15px !important;
         z-index: 9999 !important;
-        background: rgba(0, 0, 0, 0.8) !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    /* Botones de la interfaz circular */
+    .mobile-circular-btn {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50% !important;
+        border: none !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #333 !important;
+        font-size: 18px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        padding: 1rem !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        touch-action: manipulation !important;
     }
+    
+    .mobile-circular-btn:hover,
+    .mobile-circular-btn:active {
+        background: rgba(255, 255, 255, 1) !important;
+        transform: scale(1.1) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    /* Botón de voz principal */
+    .mobile-voice-btn {
+        background: rgba(255, 215, 0, 0.9) !important;
+        font-size: 20px !important;
+    }
+    
+    /* Extensión expandida lateral */
+    .mobile-extension-panel {
+        position: fixed !important;
+        bottom: 90px !important;
+        right: 20px !important;
+        width: 300px !important;
+        max-height: 400px !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-radius: 20px !important;
+        padding: 20px !important;
+        z-index: 9998 !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        transform: translateX(320px) !important;
+        transition: transform 0.3s ease !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .mobile-extension-panel.active {
+        transform: translateX(0) !important;
+    }
+    
+    /* Controles del panel */
+    .mobile-panel-controls {
+        position: absolute !important;
+        top: 10px !important;
+        right: 10px !important;
+        display: flex !important;
+        gap: 5px !important;
+    }
+    
+    .mobile-panel-btn {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 50% !important;
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .mobile-close-btn {
+        background: rgba(255, 0, 0, 0.8) !important;
+        color: white !important;
+    }
+    
+    .mobile-minimize-btn {
+        background: rgba(0, 123, 255, 0.8) !important;
+        color: white !important;
+    }
+    
+    /* Minimizado en lateral */
+    .mobile-extension-panel.minimized {
+        width: 60px !important;
+        height: 60px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        bottom: 160px !important;
+        right: 20px !important;
+        transform: translateX(0) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: rgba(74, 172, 254, 0.9) !important;
+    }
+    
+    .mobile-extension-panel.minimized * {
+        display: none !important;
+    }
+    
+    .mobile-extension-panel.minimized::after {
+        content: "🎤" !important;
+        font-size: 24px !important;
+        display: block !important;
+    }
+    
+    /* Contenido principal siempre visible */
+    .container {
+        padding-bottom: 100px !important;
+    }
+    
+    /* Navegación mejorada */
+    .navigation {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 100 !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .nav-buttons {
+        display: flex !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 0.5rem !important;
+        padding: 0.5rem !important;
+    }
+    
+    .nav-btn {
+        min-width: 80px !important;
+        padding: 0.6rem 0.8rem !important;
+        font-size: 0.8rem !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        border-radius: 20px !important;
+        border: 1px solid rgba(74, 172, 254, 0.3) !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #333 !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .nav-btn:hover,
+    .nav-btn:active,
+    .nav-btn.active {
+        background: rgba(74, 172, 254, 0.9) !important;
+        color: white !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(74, 172, 254, 0.3) !important;
+    }
+    
+    /* Secciones del contenido */
+    .main {
+        padding: 1rem !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        min-height: calc(100vh - 200px) !important;
+    }
+    
+    .section {
+        margin-bottom: 2rem !important;
+        padding: 1.5rem !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        border-radius: 15px !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        border: 1px solid rgba(74, 172, 254, 0.2) !important;
+    }
+    
+    /* Inputs y controles optimizados */
+    input, select, textarea, button {
+        min-height: 44px !important;
+        font-size: 16px !important;
+        padding: 0.8rem !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(0, 0, 0, 0.2) !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+    
+    button {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+        color: white !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        border: none !important;
+    }
+    
+    button:hover,
+    button:focus,
+    button:active {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(74, 172, 254, 0.3) !important;
+    }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .mobile-circular-interface {
+        width: 250px !important;
+        height: 55px !important;
+        bottom: 15px !important;
+    }
+    
+    .mobile-circular-btn {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 16px !important;
+    }
+    
+    .mobile-extension-panel {
+        width: calc(100vw - 40px) !important;
+        right: 20px !important;
+        left: 20px !important;
+        max-height: 350px !important;
+    }
+    
+    .mobile-extension-panel.minimized {
+        width: 50px !important;
+        height: 50px !important;
+        right: 15px !important;
+    }
+}
+
+/* Landscape en móvil */
+@media (max-width: 768px) and (orientation: landscape) {
+    .mobile-circular-interface {
+        bottom: 10px !important;
+        height: 50px !important;
+    }
+    
+    .mobile-extension-panel {
+        max-height: 300px !important;
+        bottom: 70px !important;
+    }
+    
+    .mobile-extension-panel.minimized {
+        bottom: 120px !important;
+    }
+}
+
+/* Estados de visibilidad */
+.mobile-content-visible .cookie-consent-overlay,
+.mobile-content-visible .voice-navigation-overlay {
+    display: none !important;
+}
+
+.mobile-interface-active .mobile-circular-interface {
+    display: flex !important;
+}
+
+/* Animaciones suaves */
+.mobile-circular-interface,
+.mobile-extension-panel,
+.mobile-circular-btn,
+.mobile-panel-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Efectos de hover mejorados */
+.mobile-circular-btn:active {
+    transform: scale(0.95) !important;
+}
+
+.mobile-panel-btn:active {
+    transform: scale(0.9) !important;
+}
     
     /* Cuando están ocultos, no deben ocupar espacio */
     .cookie-consent-overlay.hidden,

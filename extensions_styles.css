@@ -1,0 +1,450 @@
+/* === ESTILOS PARA NUEVAS EXTENSIONES === */
+
+/* Contenedores de extensiones */
+.extension-container {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 15px;
+    border: 2px solid rgba(74, 172, 254, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.extension-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 172, 254, 0.2);
+    border-color: rgba(74, 172, 254, 0.5);
+}
+
+.extension-container h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.extension-container p {
+    margin: 0 0 1rem 0;
+    color: #5a6c7d;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Botones de extensiones */
+.extension-btn {
+    display: inline-block;
+    margin: 0.3rem 0.5rem 0.3rem 0;
+    padding: 0.7rem 1.2rem;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+}
+
+.extension-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+}
+
+.extension-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(79, 172, 254, 0.3);
+}
+
+/* Extensiones específicas */
+.voice-extension {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    border-color: rgba(255, 193, 7, 0.4);
+}
+
+.ray3-extension {
+    background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+    border-color: rgba(253, 121, 168, 0.4);
+}
+
+.gamma-extension {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+    border-color: rgba(162, 155, 254, 0.4);
+}
+
+.figma-extension {
+    background: linear-gradient(135deg, #fd79a8 0%, #ff7675 100%);
+    border-color: rgba(255, 118, 117, 0.4);
+}
+
+.reve-extension {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    border-color: rgba(0, 206, 201, 0.4);
+}
+
+.alisa-extension {
+    background: linear-gradient(135deg, #e17055 0%, #fdcb6e 100%);
+    border-color: rgba(225, 112, 85, 0.4);
+}
+
+.visita3d-extension {
+    background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);
+    border-color: rgba(116, 185, 255, 0.4);
+}
+
+/* Modales de extensiones */
+.extension-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 1rem;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.modal-content .close:hover {
+    color: #333;
+}
+
+.modal-content h3 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1.4rem;
+}
+
+.modal-content h4 {
+    margin: 1rem 0 0.5rem 0;
+    color: #34495e;
+    font-size: 1.1rem;
+}
+
+.modal-content ol, .modal-content ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.modal-content li {
+    margin: 0.3rem 0;
+    line-height: 1.4;
+}
+
+/* Formularios de importación */
+.import-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.import-form label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.3rem;
+}
+
+.import-form input,
+.import-form select,
+.import-form textarea {
+    padding: 0.8rem;
+    border: 2px solid #e0e6ed;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.import-form input:focus,
+.import-form select:focus,
+.import-form textarea:focus {
+    outline: none;
+    border-color: #4facfe;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.import-form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.import-form button {
+    padding: 1rem;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.import-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+/* Notificaciones de éxito */
+.success-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    z-index: 10001;
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+    animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Estilos para móvil */
+@media (max-width: 768px) {
+    .extension-container {
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    
+    .extension-container h3 {
+        font-size: 1.1rem;
+    }
+    
+    .extension-btn {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 0.8rem;
+        text-align: center;
+    }
+    
+    .modal-content {
+        margin: 1rem;
+        padding: 1.5rem;
+        max-width: none;
+        width: calc(100% - 2rem);
+    }
+    
+    .import-form input,
+    .import-form select,
+    .import-form textarea,
+    .import-form button {
+        font-size: 16px; /* Evita zoom en iOS */
+    }
+    
+    .success-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+    }
+}
+
+/* Animaciones adicionales */
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: scale(0.9); }
+    10% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.9); }
+}
+
+.mobile-notification {
+    animation: fadeInOut 2s ease-in-out;
+}
+
+/* Estilos para menús móviles */
+.mobile-navigation-menu,
+.mobile-help-modal,
+.mobile-settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 1rem;
+}
+
+.menu-content,
+.help-content,
+.settings-content {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.menu-close,
+.help-close,
+.settings-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    background: none;
+    border: none;
+    transition: color 0.3s ease;
+}
+
+.menu-close:hover,
+.help-close:hover,
+.settings-close:hover {
+    color: #333;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menu-item {
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid rgba(74, 172, 254, 0.2);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.menu-item:hover {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+.help-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.help-section {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #4facfe;
+}
+
+.help-section h4 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.help-section p {
+    margin: 0;
+    color: #5a6c7d;
+    line-height: 1.4;
+}
+
+.settings-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.setting-item label {
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.setting-item select {
+    padding: 0.8rem;
+    border: 2px solid #e0e6ed;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.save-settings {
+    padding: 1rem;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.save-settings:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
