@@ -31,6 +31,24 @@ class NewExtensionsManager {
     addToVideoSection() {
         const videoSection = document.querySelector('#videos-section, [data-section="videos"]');
         if (videoSection) {
+            // RoboNeoAI para generación de video
+            const roboneoContainer = document.createElement('div');
+            roboneoContainer.className = 'extension-container roboneo-extension';
+            roboneoContainer.innerHTML = `
+                <h3>🎨 RoboNeoAI - Generación Creativa</h3>
+                <p>Crea contenido visual y videos con IA conversacional de Meitu</p>
+                <button class="extension-btn" data-extension="roboneo" data-action="open">
+                    Abrir RoboNeoAI
+                </button>
+                <button class="extension-btn" data-extension="roboneo" data-action="import">
+                    Importar Creación
+                </button>
+                <button class="extension-btn" data-extension="roboneo" data-action="custom-url">
+                    URL Personalizada
+                </button>
+            `;
+            videoSection.appendChild(roboneoContainer);
+            
             // Extensión VOZ con ElevenLabs Studio 3.0
             const voiceContainer = document.createElement('div');
             voiceContainer.className = 'extension-container voice-extension';
@@ -42,6 +60,9 @@ class NewExtensionsManager {
                 </button>
                 <button class="extension-btn" data-extension="voice" data-action="import">
                     Importar Audio/Video
+                </button>
+                <button class="extension-btn" data-extension="voice" data-action="custom-url">
+                    URL Personalizada
                 </button>
             `;
             videoSection.appendChild(voiceContainer);
@@ -57,6 +78,9 @@ class NewExtensionsManager {
                 </button>
                 <button class="extension-btn" data-extension="ray3" data-action="import">
                     Importar Generación
+                </button>
+                <button class="extension-btn" data-extension="ray3" data-action="custom-url">
+                    URL Personalizada
                 </button>
             `;
             videoSection.appendChild(ray3Container);
@@ -78,6 +102,9 @@ class NewExtensionsManager {
                 <button class="extension-btn" data-extension="gamma" data-action="import">
                     Importar Presentación
                 </button>
+                <button class="extension-btn" data-extension="gamma" data-action="custom-url">
+                    URL Personalizada
+                </button>
             `;
             imageSection.appendChild(gammaContainer);
             
@@ -93,6 +120,9 @@ class NewExtensionsManager {
                 <button class="extension-btn" data-extension="figma" data-action="import">
                     Importar Diseño
                 </button>
+                <button class="extension-btn" data-extension="figma" data-action="custom-url">
+                    URL Personalizada
+                </button>
             `;
             imageSection.appendChild(figmaContainer);
             
@@ -107,6 +137,9 @@ class NewExtensionsManager {
                 </button>
                 <button class="extension-btn" data-extension="reve" data-action="import">
                     Importar Modificación
+                </button>
+                <button class="extension-btn" data-extension="reve" data-action="custom-url">
+                    URL Personalizada
                 </button>
             `;
             imageSection.appendChild(reveContainer);
@@ -128,6 +161,9 @@ class NewExtensionsManager {
                 <button class="extension-btn" data-extension="alisa" data-action="import">
                     Importar Avatar
                 </button>
+                <button class="extension-btn" data-extension="alisa" data-action="custom-url">
+                    URL Personalizada
+                </button>
             `;
             avatarSection.appendChild(alisaContainer);
         }
@@ -148,6 +184,9 @@ class NewExtensionsManager {
                 <button class="extension-btn" data-extension="visita3d" data-action="import">
                     Importar Mundo 3D
                 </button>
+                <button class="extension-btn" data-extension="visita3d" data-action="custom-url">
+                    URL Personalizada
+                </button>
             `;
             worldSection.appendChild(visita3dContainer);
         }
@@ -164,12 +203,284 @@ class NewExtensionsManager {
     }
     
     handleExtensionAction(extension, action) {
-        if (this.extensions[extension]) {
+        if (action === 'custom-url') {
+            this.showCustomUrlModal(extension);
+        } else if (this.extensions[extension]) {
             if (action === 'open') {
                 this.extensions[extension].open();
             } else if (action === 'import') {
                 this.extensions[extension].import();
             }
+        } else if (extension === 'roboneo') {
+            this.handleRoboNeoAction(action);
+        }
+    }
+    
+    handleRoboNeoAction(action) {
+        if (action === 'open') {
+            this.openRoboNeo();
+        } else if (action === 'import') {
+            this.importFromRoboNeo();
+        }
+    }
+    
+    openRoboNeo() {
+        const roboneoWindow = window.open('https://roboneoai.art', '_blank', 'width=1200,height=800');
+        
+        this.showInstructions('RoboNeoAI - Generación Creativa', `
+            <h4>🎨 Instrucciones para RoboNeoAI:</h4>
+            <ol>
+                <li>Explora la galería de arte generado por IA</li>
+                <li>Usa prompts efectivos de la comunidad</li>
+                <li>Crea tus propios diseños con RoboNeo</li>
+                <li>Descarga o comparte tus creaciones</li>
+                <li>Vuelve aquí para importar al editor</li>
+            </ol>
+            <p><strong>Estilos disponibles:</strong></p>
+            <ul>
+                <li>iOS Emoji Style</li>
+                <li>Notion Avatar Style</li>
+                <li>Pixel Art</li>
+                <li>Personajes 3D</li>
+            </ul>
+        `);
+    }
+    
+    importFromRoboNeo() {
+        const modal = this.createImportModal('Importar desde RoboNeoAI', `
+            <div class="import-form">
+                <label>URL de la creación:</label>
+                <input type="url" id="roboneo-url" placeholder="https://roboneoai.art/...">
+                
+                <label>Imagen generada:</label>
+                <input type="file" id="roboneo-file" accept="image/*">
+                
+                <label>Prompt utilizado:</label>
+                <textarea id="roboneo-prompt" placeholder="Describe el prompt usado para generar la imagen..."></textarea>
+                
+                <label>Estilo:</label>
+                <select id="roboneo-style">
+                    <option value="ios-emoji">iOS Emoji Style</option>
+                    <option value="notion-avatar">Notion Avatar Style</option>
+                    <option value="pixel-art">Pixel Art</option>
+                    <option value="3d-character">Personaje 3D</option>
+                    <option value="other">Otro</option>
+                </select>
+                
+                <button onclick="this.processRoboNeoImport()">Importar Creación</button>
+            </div>
+        `);
+        
+        document.body.appendChild(modal);
+    }
+    
+    processRoboNeoImport() {
+        const url = document.getElementById('roboneo-url').value;
+        const file = document.getElementById('roboneo-file').files[0];
+        const prompt = document.getElementById('roboneo-prompt').value;
+        const style = document.getElementById('roboneo-style').value;
+        
+        if (url || file) {
+            this.importToEditor({
+                source: 'RoboNeoAI Creative',
+                url: url,
+                file: file,
+                prompt: prompt,
+                style: style,
+                type: 'creative-art',
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+    
+    showCustomUrlModal(extension) {
+        const extensionNames = {
+            'voice': 'ElevenLabs Studio',
+            'ray3': 'Luma Labs Ray 3',
+            'gamma': 'Gamma Slides',
+            'figma': 'Figma',
+            'reve': 'Reve Objects',
+            'alisa': 'HeyGen Alisa',
+            'visita3d': 'World Labs',
+            'roboneo': 'RoboNeoAI'
+        };
+        
+        const modal = this.createImportModal(`URL Personalizada - ${extensionNames[extension]}`, `
+            <div class="custom-url-form">
+                <h4>🔗 Configurar URL Personalizada</h4>
+                <p>Añade tu propia URL para ${extensionNames[extension]} o una alternativa similar</p>
+                
+                <label>URL personalizada:</label>
+                <input type="url" id="custom-extension-url" placeholder="https://tu-herramienta-alternativa.com">
+                
+                <label>Nombre personalizado:</label>
+                <input type="text" id="custom-extension-name" placeholder="Mi herramienta personalizada">
+                
+                <label>Descripción:</label>
+                <textarea id="custom-extension-description" placeholder="Describe las funciones de esta herramienta..."></textarea>
+                
+                <div class="custom-url-actions">
+                    <button onclick="this.saveCustomUrl('${extension}')">Guardar URL</button>
+                    <button onclick="this.openCustomUrl('${extension}')">Abrir URL Guardada</button>
+                    <button onclick="this.clearCustomUrl('${extension}')">Limpiar URL</button>
+                </div>
+                
+                <div class="saved-urls">
+                    <h5>URLs Guardadas:</h5>
+                    <div id="saved-urls-list-${extension}">
+                        ${this.renderSavedUrls(extension)}
+                    </div>
+                </div>
+            </div>
+        `);
+        
+        document.body.appendChild(modal);
+    }
+    
+    saveCustomUrl(extension) {
+        const url = document.getElementById('custom-extension-url').value;
+        const name = document.getElementById('custom-extension-name').value;
+        const description = document.getElementById('custom-extension-description').value;
+        
+        if (url) {
+            const customUrls = this.getCustomUrls();
+            if (!customUrls[extension]) {
+                customUrls[extension] = [];
+            }
+            
+            customUrls[extension].push({
+                url: url,
+                name: name || 'URL Personalizada',
+                description: description,
+                created: new Date().toISOString()
+            });
+            
+            localStorage.setItem('extensionCustomUrls', JSON.stringify(customUrls));
+            this.showSuccess(`URL guardada para ${extension}`);
+            
+            // Actualizar lista
+            const savedUrlsList = document.getElementById(`saved-urls-list-${extension}`);
+            if (savedUrlsList) {
+                savedUrlsList.innerHTML = this.renderSavedUrls(extension);
+            }
+        }
+    }
+    
+    openCustomUrl(extension) {
+        const customUrls = this.getCustomUrls();
+        if (customUrls[extension] && customUrls[extension].length > 0) {
+            const latestUrl = customUrls[extension][customUrls[extension].length - 1];
+            window.open(latestUrl.url, '_blank', 'width=1200,height=800');
+            this.showSuccess(`Abriendo ${latestUrl.name}`);
+        } else {
+            alert('No hay URLs guardadas para esta extensión');
+        }
+    }
+    
+    clearCustomUrl(extension) {
+        if (confirm('¿Estás seguro de que quieres eliminar todas las URLs guardadas para esta extensión?')) {
+            const customUrls = this.getCustomUrls();
+            delete customUrls[extension];
+            localStorage.setItem('extensionCustomUrls', JSON.stringify(customUrls));
+            this.showSuccess('URLs eliminadas');
+            
+            // Actualizar lista
+            const savedUrlsList = document.getElementById(`saved-urls-list-${extension}`);
+            if (savedUrlsList) {
+                savedUrlsList.innerHTML = this.renderSavedUrls(extension);
+            }
+        }
+    }
+    
+    getCustomUrls() {
+        try {
+            return JSON.parse(localStorage.getItem('extensionCustomUrls') || '{}');
+        } catch (error) {
+            return {};
+        }
+    }
+    
+    renderSavedUrls(extension) {
+        const customUrls = this.getCustomUrls();
+        if (!customUrls[extension] || customUrls[extension].length === 0) {
+            return '<p class="no-saved-urls">No hay URLs guardadas</p>';
+        }
+        
+        return customUrls[extension].map((urlData, index) => `
+            <div class="saved-url-item">
+                <strong>${urlData.name}</strong>
+                <p>${urlData.description}</p>
+                <small>${urlData.url}</small>
+                <div class="saved-url-actions">
+                    <button onclick="window.open('${urlData.url}', '_blank')">Abrir</button>
+                    <button onclick="this.deleteSavedUrl('${extension}', ${index})">Eliminar</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    deleteSavedUrl(extension, index) {
+        const customUrls = this.getCustomUrls();
+        if (customUrls[extension]) {
+            customUrls[extension].splice(index, 1);
+            localStorage.setItem('extensionCustomUrls', JSON.stringify(customUrls));
+            
+            // Actualizar lista
+            const savedUrlsList = document.getElementById(`saved-urls-list-${extension}`);
+            if (savedUrlsList) {
+                savedUrlsList.innerHTML = this.renderSavedUrls(extension);
+            }
+            
+            this.showSuccess('URL eliminada');
+        }
+    }
+    
+    showInstructions(title, content) {
+        const modal = document.createElement('div');
+        modal.className = 'extension-modal instructions-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>${title}</h3>
+                ${content}
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        modal.querySelector('.close').onclick = () => modal.remove();
+        modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+    }
+    
+    createImportModal(title, content) {
+        const modal = document.createElement('div');
+        modal.className = 'extension-modal import-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>${title}</h3>
+                ${content}
+            </div>
+        `;
+        
+        modal.querySelector('.close').onclick = () => modal.remove();
+        modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+        
+        return modal;
+    }
+    
+    showSuccess(message) {
+        const notification = document.createElement('div');
+        notification.className = 'success-notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.remove(), 3000);
+    }
+    
+    importToEditor(data) {
+        if (window.editorMundos) {
+            window.editorMundos.addImportedContent(data);
+            this.showSuccess(`Contenido importado desde ${data.source}`);
         }
     }
     
