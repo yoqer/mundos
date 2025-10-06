@@ -15,12 +15,12 @@ class EditorMundosState {
         
         // Cache local (fallback)
         this.cache = {
-            carloMaxxine: new Map(),
-            genie3: new Map(),
-            odyssey: new Map(),
-            videos: new Map(),
-            worlds: new Map(),
-            avatars: new Map()
+            carloMaxxine: new IntelligentCache(),
+            genie3: new IntelligentCache(),
+            odyssey: new IntelligentCache(),
+            videos: new IntelligentCache(),
+            worlds: new IntelligentCache(),
+            avatars: new IntelligentCache()
         };
         
         this.selectedItems = {
@@ -56,11 +56,14 @@ class EditorMundosState {
                 // Configurar almacenamiento híbrido
                 if (window.hybridStorage) {
                     this.storage = window.hybridStorage;
-                    await this.loadStoredData();
+                    this.storage = window.hybridStorage;
                 }
-                
-                // Actualizar configuración según el entorno
-                this.configureForEnvironment();
+
+                // Ejecutar tareas de inicialización en paralelo
+                await Promise.all([
+                    this.loadStoredData(),
+                    this.configureForEnvironment()
+                ]);
                 
                 this.isInitialized = true;
                 this.updateStatus('connection', this.environment.isOnline ? 'Conectado' : 'Offline');

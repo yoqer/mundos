@@ -211,6 +211,8 @@ class NewExtensionsManager {
             } else if (action === 'import') {
                 this.extensions[extension].import();
             }
+        } else if (action === 'import') {
+            this.showUnifiedImportModal(extension);
         } else if (extension === 'roboneo') {
             this.handleRoboNeoAction(action);
         }
@@ -219,8 +221,6 @@ class NewExtensionsManager {
     handleRoboNeoAction(action) {
         if (action === 'open') {
             this.openRoboNeo();
-        } else if (action === 'import') {
-            this.importFromRoboNeo();
         }
     }
     
@@ -244,53 +244,6 @@ class NewExtensionsManager {
                 <li>Personajes 3D</li>
             </ul>
         `);
-    }
-    
-    importFromRoboNeo() {
-        const modal = this.createImportModal('Importar desde RoboNeoAI', `
-            <div class="import-form">
-                <label>URL de la creación:</label>
-                <input type="url" id="roboneo-url" placeholder="https://roboneoai.art/...">
-                
-                <label>Imagen generada:</label>
-                <input type="file" id="roboneo-file" accept="image/*">
-                
-                <label>Prompt utilizado:</label>
-                <textarea id="roboneo-prompt" placeholder="Describe el prompt usado para generar la imagen..."></textarea>
-                
-                <label>Estilo:</label>
-                <select id="roboneo-style">
-                    <option value="ios-emoji">iOS Emoji Style</option>
-                    <option value="notion-avatar">Notion Avatar Style</option>
-                    <option value="pixel-art">Pixel Art</option>
-                    <option value="3d-character">Personaje 3D</option>
-                    <option value="other">Otro</option>
-                </select>
-                
-                <button onclick="this.processRoboNeoImport()">Importar Creación</button>
-            </div>
-        `);
-        
-        document.body.appendChild(modal);
-    }
-    
-    processRoboNeoImport() {
-        const url = document.getElementById('roboneo-url').value;
-        const file = document.getElementById('roboneo-file').files[0];
-        const prompt = document.getElementById('roboneo-prompt').value;
-        const style = document.getElementById('roboneo-style').value;
-        
-        if (url || file) {
-            this.importToEditor({
-                source: 'RoboNeoAI Creative',
-                url: url,
-                file: file,
-                prompt: prompt,
-                style: style,
-                type: 'creative-art',
-                timestamp: new Date().toISOString()
-            });
-        }
     }
     
     showCustomUrlModal(extension) {
@@ -1309,4 +1262,90 @@ if (document.readyState === 'loading') {
 
 // Exportar para uso global
 window.NewExtensionsManager = NewExtensionsManager;
+
+
+
+
+    // === UNIFIED IMPORT FUNCTIONS ===
+
+    showUnifiedImportModal(extensionKey) {
+        const extensionConfig = this.getImportConfig(extensionKey);
+        if (!extensionConfig) {
+            console.error(`No import config found for ${extensionKey}`);
+            return;
+        }
+
+        const formFields = extensionConfig.fields.map(field => {
+            switch (field.type) {
+                case 'url':
+                    return `<label>${field.label}:</label><input type="url" id="import-${field.id}" placeholder="${field.placeholder}">`;
+                case 'file':
+                    return `<label>${field.label}:</label><input type="file" id="import-${field.id}" accept="${field.accept}">`;
+                case 'textarea':
+                    return `<label>${field.label}:</label><textarea id="import-${field.id}" placeholder="${field.placeholder}"></textarea>`;
+                case 'select':
+                    const options = field.options.map(opt => `<option value="${opt.value}">${opt.text}</option>`).join('');
+                    return `<label>${field.label}:</label><select id="import-${field.id}">${options}</select>`;
+                default:
+                    return '';
+            }
+        }).join('');
+
+        const modal = this.createImportModal(`Importar desde ${extensionConfig.title}`, `
+            <div class="import-form" data-extension="${extensionKey}">
+                ${formFields}
+                <button onclick="newExtensionsManager.processUnifiedImport('${extensionKey}')">Importar Creación</button>
+            </div>
+        `);
+
+        document.body.appendChild(modal);
+    }
+
+    processUnifiedImport(extensionKey) {
+        const extensionConfig = this.getImportConfig(extensionKey);
+        const importData = {
+            source: extensionConfig.title,
+            type: extensionConfig.importType,
+            timestamp: new Date().toISOString()
+        };
+
+        extensionConfig.fields.forEach(field => {
+            const element = document.getElementById(`import-${field.id}`);
+            if (element) {
+                importData[field.id] = field.type === 'file' ? element.files[0] : element.value;
+            }
+        });
+
+        if (importData.url || importData.file) {
+            this.importToEditor(importData);
+            const modal = document.querySelector('.import-modal');
+            if (modal) {
+                modal.parentElement.removeChild(modal);
+            }
+        } else {
+            alert('Por favor, proporciona una URL o un archivo.');
+        }
+    }
+
+    getImportConfig(extensionKey) {
+        const configs = {
+            'roboneo': {
+                title: 'RoboNeoAI',
+                importType: 'creative-art',
+                fields: [
+                    { id: 'url', type: 'url', label: 'URL de la creación', placeholder: 'https://roboneoai.art/...' },
+                    { id: 'file', type: 'file', label: 'Imagen generada', accept: 'image/*' },
+                    { id: 'prompt', type: 'textarea', label: 'Prompt utilizado', placeholder: 'Describe el prompt...' },
+                    { id: 'style', type: 'select', label: 'Estilo', options: [
+                        { value: 'ios-emoji', text: 'iOS Emoji Style' },
+                        { value: 'notion-avatar', text: 'Notion Avatar Style' },
+                        { value: 'pixel-art', text: 'Pixel Art' },
+                        { value: '3d-character', text: 'Personaje 3D' },
+                        { value: 'other', text: 'Otro' }
+                    ]}
+                ]
+            }
+        };
+        return configs[extensionKey];
+    }
 

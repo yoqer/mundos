@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Fase 1 - Optimización MundosInfinitos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="voice_styles.css">
+    <link rel="stylesheet" href="cover_styles.css">
+    <link rel="stylesheet" href="layout_styles.css">
+    <link rel="stylesheet" href="api_styles.css">
+    <link rel="stylesheet" href="mobile_improvements.css">
+    <link rel="stylesheet" href="extensions_styles.css">
+    <link rel="stylesheet" href="agents_styles.css">
+</head>
+<body>
+    <h1>Test de Optimización - Fase 1</h1>
+    <div id="test-output"></div>
+
+    <script src="intelligent_cache.js"></script>
+    <script src="environment_detector.js"></script>
+    <script src="hybrid_storage.js"></script>
+    <script src="script.js"></script>
+    <script src="new_extensions.js"></script>
+
+    <script>
+        const output = document.getElementById('test-output');
+
+        function log(message) {
+            console.log(message);
+            output.innerHTML += `<p>${message}</p>`;
+        }
+
+        async function runTests() {
+            log("--- INICIANDO TESTS FASE 1 ---");
+
+            // Test 1: IntelligentCache
+            log("--- Test 1: IntelligentCache ---");
+            const cache = new IntelligentCache(3);
+            cache.set("a", 1);
+            cache.set("b", 2);
+            cache.set("c", 3);
+            log(`Cache size: ${cache.size}`);
+            cache.get("a");
+            cache.set("d", 4);
+            log(`Cache size after adding "d": ${cache.size}`);
+            log(`Cache keys: ${[...cache.keys()]}`);
+            if (cache.get("b") === null) {
+                log("✅ Test 1.1: PASSED - LRU eviction");
+            } else {
+                log("❌ Test 1.1: FAILED - LRU eviction");
+            }
+
+            // Test 2: Inicialización Paralela
+            log("--- Test 2: Inicialización Paralela ---");
+            const startTime = performance.now();
+            await appState.initializeHybridSystem();
+            const endTime = performance.now();
+            log(`Tiempo de inicialización: ${endTime - startTime}ms`);
+            if (appState.isInitialized) {
+                log("✅ Test 2.1: PASSED - Sistema inicializado");
+            } else {
+                log("❌ Test 2.1: FAILED - Sistema no inicializado");
+            }
+
+            // Test 3: Unificación de Importación
+            log("--- Test 3: Unificación de Importación ---");
+            newExtensionsManager.showUnifiedImportModal('roboneo');
+            const modal = document.querySelector('.import-modal');
+            if (modal) {
+                log("✅ Test 3.1: PASSED - Modal de importación unificado mostrado");
+                modal.parentElement.removeChild(modal);
+            } else {
+                log("❌ Test 3.1: FAILED - Modal de importación unificado no mostrado");
+            }
+
+            log("--- TESTS FINALIZADOS ---");
+        }
+
+        window.onload = runTests;
+    </script>
+</body>
+</html>
