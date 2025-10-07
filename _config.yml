@@ -1,0 +1,26 @@
+title: "MundosInfinitos - Editor de Mundos Optimizado"
+description: "Editor avanzado de mundos con optimizaciones de rendimiento y extensiones IA"
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# GitHub Pages configuration
+baseurl: "/mundos"
+url: "https://yoqer.github.io"
+
+# Navigation
+header_pages:
+  - index.html
+  - test_fase1.html
+
+# Exclude files from processing
+exclude:
+  - "*.patch"
+  - "*.log"
+  - node_modules/
+  - vendor/
+
+# Include files that start with underscore
+include:
+  - _config.yml
