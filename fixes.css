@@ -1,0 +1,127 @@
+/* Correcciones CSS para GitHub Pages */
+
+/* Asegurar que las secciones se muestren correctamente */
+.content-section {
+    display: none !important;
+}
+
+.content-section.active {
+    display: block !important;
+}
+
+/* Corregir z-index de modales */
+.voice-interface,
+.cookie-consent-banner,
+.cookie-customization-modal,
+.import-modal,
+.help-modal {
+    z-index: 9999 !important;
+    position: fixed !important;
+}
+
+/* Botón de cierre mejorado */
+.close-btn,
+button[onclick*="remove"],
+button:contains("×") {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    z-index: 10000;
+}
+
+.close-btn:hover {
+    background: #ff3742;
+}
+
+/* Mejorar visibilidad de botones de navegación */
+.nav-btn {
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.nav-btn.active {
+    background: #3498db !important;
+    color: white !important;
+}
+
+/* Corregir problemas de overflow */
+.main-content {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+/* Mejorar responsividad */
+@media (max-width: 768px) {
+    .container {
+        grid-template-areas: 
+            "header"
+            "nav"
+            "main"
+            "aside";
+        grid-template-columns: 1fr;
+    }
+    
+    .voice-interface,
+    .cookie-consent-banner {
+        width: 95% !important;
+        left: 2.5% !important;
+    }
+}
+
+/* Corregir problemas con extensiones */
+.extension-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.extension-btn {
+    margin: 5px;
+    padding: 8px 16px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.extension-btn:hover {
+    background: #2980b9;
+}
+
+/* Asegurar que los modales sean visibles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9998;
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    margin: 50px auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    z-index: 9999;
+}
