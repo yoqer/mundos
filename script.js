@@ -274,15 +274,35 @@ function initializeNavigation() {
 }
 
 function switchSection(sectionId) {
-    // Actualizar botones de navegación
-    document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
-    document.querySelector(`[data-section="${sectionId}"]`).classList.add("active");
+    try {
+        // Actualizar botones de navegación
+        document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+        
+        const targetButton = document.querySelector(`[data-section="${sectionId}"]`);
+        if (targetButton) {
+            targetButton.classList.add("active");
+        }
 
-    // Actualizar secciones de contenido
-    document.querySelectorAll(".content-section").forEach(section => section.classList.remove("active"));
-    document.getElementById(sectionId).classList.add("active");
+        // Actualizar secciones de contenido
+        document.querySelectorAll(".content-section").forEach(section => {
+            section.classList.remove("active");
+            section.style.display = "none";
+        });
+        
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add("active");
+            targetSection.style.display = "block";
+        } else {
+            console.warn(`Section with ID "${sectionId}" not found`);
+            return;
+        }
 
-    appState.currentSection = sectionId;
+        appState.currentSection = sectionId;
+        console.log(`Switched to section: ${sectionId}`);
+    } catch (error) {
+        console.error('Error switching section:', error);
+    }
 }
 
 // === ANÁLISIS DE URLs ===
