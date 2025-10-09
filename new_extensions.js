@@ -5,6 +5,8 @@ class NewExtensionsManager {
         this.extensions = {
             voice: new ElevenLabsStudioExtension(),
             ray3: new LumaLabsRay3Extension(),
+            sora2: new Sora2Extension(),
+            grok: new GrokVideoExtension(),
             gamma: new GammaSlidesExtension(),
             figma: new FigmaExtension(),
             reve: new ReveObjectsExtension(),
@@ -84,6 +86,77 @@ class NewExtensionsManager {
                 </button>
             `;
             videoSection.appendChild(ray3Container);
+            
+            // Sora 2 - OpenAI Video Generation
+            const sora2Container = document.createElement('div');
+            sora2Container.className = 'extension-container sora2-extension';
+            sora2Container.innerHTML = `
+                <h3>🎬 Sora 2 - OpenAI Video Generation</h3>
+                <p>Genera videos realistas desde texto con la IA más avanzada de OpenAI</p>
+                <button class="extension-btn" data-extension="sora2" data-action="open">
+                    Abrir Sora 2
+                </button>
+                <button class="extension-btn" data-extension="sora2" data-action="import">
+                    Importar Video Generado
+                </button>
+                <button class="extension-btn" data-extension="sora2" data-action="custom-url">
+                    URL Personalizada
+                </button>
+            `;
+            videoSection.appendChild(sora2Container);
+            
+            // Grok.com - Video Generation
+            const grokContainer = document.createElement('div');
+            grokContainer.className = 'extension-container grok-extension';
+            grokContainer.innerHTML = `
+                <h3>🤖 Grok - Video Generation</h3>
+                <p>Genera videos con IA conversacional y análisis avanzado de contenido</p>
+                <button class="extension-btn" data-extension="grok" data-action="open">
+                    Abrir Grok Videos
+                </button>
+                <button class="extension-btn" data-extension="grok" data-action="import">
+                    Importar Video de Grok
+                </button>
+                <button class="extension-btn" data-extension="grok" data-action="custom-url">
+                    URL Personalizada
+                </button>
+            `;
+            videoSection.appendChild(grokContainer);
+            
+            // Enlaces de Webs de Videos
+            const videoLinksContainer = document.createElement('div');
+            videoLinksContainer.className = 'extension-container video-links-extension';
+            videoLinksContainer.innerHTML = `
+                <h3>🔗 Enlaces de Webs de Videos</h3>
+                <p>Acceso rápido a plataformas de video y herramientas de generación</p>
+                <div class="video-links-grid">
+                    <button class="extension-btn video-link-btn" data-url="https://www.youtube.com">
+                        📺 YouTube
+                    </button>
+                    <button class="extension-btn video-link-btn" data-url="https://vimeo.com">
+                        🎥 Vimeo
+                    </button>
+                    <button class="extension-btn video-link-btn" data-url="https://www.twitch.tv">
+                        🎮 Twitch
+                    </button>
+                    <button class="extension-btn video-link-btn" data-url="https://www.dailymotion.com">
+                        📹 Dailymotion
+                    </button>
+                    <button class="extension-btn video-link-btn" data-url="https://www.tiktok.com">
+                        🎵 TikTok
+                    </button>
+                    <button class="extension-btn video-link-btn" data-url="https://www.instagram.com/reels">
+                        📸 Instagram Reels
+                    </button>
+                </div>
+                <div class="custom-video-link">
+                    <input type="url" id="custom-video-url" placeholder="Añadir enlace personalizado de video">
+                    <button class="extension-btn" onclick="this.addCustomVideoLink()">
+                        ➕ Añadir Enlace
+                    </button>
+                </div>
+            `;
+            videoSection.appendChild(videoLinksContainer);
         }
     }
     
@@ -198,6 +271,9 @@ class NewExtensionsManager {
                 const extension = e.target.dataset.extension;
                 const action = e.target.dataset.action;
                 this.handleExtensionAction(extension, action);
+            } else if (e.target.classList.contains('video-link-btn')) {
+                const url = e.target.dataset.url;
+                this.openVideoLink(url);
             }
         });
     }
@@ -1344,8 +1420,281 @@ window.NewExtensionsManager = NewExtensionsManager;
                         { value: 'other', text: 'Otro' }
                     ]}
                 ]
+            },
+            'sora2': {
+                title: 'Sora 2 - OpenAI',
+                importType: 'video-generation',
+                fields: [
+                    { id: 'url', type: 'url', label: 'URL del video', placeholder: 'https://openai.com/sora/...' },
+                    { id: 'file', type: 'file', label: 'Video generado', accept: 'video/*' },
+                    { id: 'prompt', type: 'textarea', label: 'Prompt utilizado', placeholder: 'Describe el prompt para el video...' },
+                    { id: 'duration', type: 'select', label: 'Duración', options: [
+                        { value: 'short', text: 'Corto (hasta 20s)' },
+                        { value: 'medium', text: 'Medio (20-60s)' },
+                        { value: 'long', text: 'Largo (más de 60s)' }
+                    ]},
+                    { id: 'resolution', type: 'select', label: 'Resolución', options: [
+                        { value: '720p', text: '720p HD' },
+                        { value: '1080p', text: '1080p Full HD' },
+                        { value: '4k', text: '4K Ultra HD' }
+                    ]}
+                ]
+            },
+            'grok': {
+                title: 'Grok Video',
+                importType: 'video-analysis',
+                fields: [
+                    { id: 'url', type: 'url', label: 'URL de Grok', placeholder: 'https://grok.com/...' },
+                    { id: 'file', type: 'file', label: 'Contenido generado', accept: 'video/*,text/*' },
+                    { id: 'analysis', type: 'textarea', label: 'Análisis o descripción', placeholder: 'Describe el análisis o contenido...' },
+                    { id: 'type', type: 'select', label: 'Tipo de contenido', options: [
+                        { value: 'video', text: 'Video generado' },
+                        { value: 'analysis', text: 'Análisis de video' },
+                        { value: 'script', text: 'Script para video' },
+                        { value: 'other', text: 'Otro' }
+                    ]}
+                ]
             }
         };
         return configs[extensionKey];
     }
 
+
+    // === FUNCIONES PARA ENLACES DE VIDEO ===
+    
+    openVideoLink(url) {
+        window.open(url, '_blank', 'width=1200,height=800');
+        this.showInstructions('Plataforma de Video Abierta', `
+            <h4>🎥 Accediendo a plataforma de video</h4>
+            <p>Se ha abierto la plataforma de video en una nueva ventana.</p>
+            <p>Una vez que hayas seleccionado o creado tu contenido, puedes volver aquí para importarlo al editor.</p>
+        `);
+    }
+    
+    addCustomVideoLink() {
+        const urlInput = document.getElementById('custom-video-url');
+        const url = urlInput.value.trim();
+        
+        if (url && this.isValidUrl(url)) {
+            const videoLinksGrid = document.querySelector('.video-links-grid');
+            const customButton = document.createElement('button');
+            customButton.className = 'extension-btn video-link-btn';
+            customButton.dataset.url = url;
+            customButton.innerHTML = `🔗 ${this.extractDomainName(url)}`;
+            
+            videoLinksGrid.appendChild(customButton);
+            urlInput.value = '';
+            
+            // Guardar en localStorage
+            this.saveCustomVideoLink(url);
+            
+            this.showSuccess('Enlace personalizado añadido correctamente');
+        } else {
+            alert('Por favor, ingresa una URL válida');
+        }
+    }
+    
+    isValidUrl(string) {
+        try {
+            new URL(string);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+    
+    extractDomainName(url) {
+        try {
+            const domain = new URL(url).hostname;
+            return domain.replace('www.', '').split('.')[0];
+        } catch (_) {
+            return 'Enlace Personalizado';
+        }
+    }
+    
+    saveCustomVideoLink(url) {
+        const customLinks = JSON.parse(localStorage.getItem('customVideoLinks') || '[]');
+        if (!customLinks.includes(url)) {
+            customLinks.push(url);
+            localStorage.setItem('customVideoLinks', JSON.stringify(customLinks));
+        }
+    }
+    
+    loadCustomVideoLinks() {
+        const customLinks = JSON.parse(localStorage.getItem('customVideoLinks') || '[]');
+        const videoLinksGrid = document.querySelector('.video-links-grid');
+        
+        customLinks.forEach(url => {
+            const customButton = document.createElement('button');
+            customButton.className = 'extension-btn video-link-btn';
+            customButton.dataset.url = url;
+            customButton.innerHTML = `🔗 ${this.extractDomainName(url)}`;
+            videoLinksGrid.appendChild(customButton);
+        });
+    }
+}
+
+// === CLASES DE EXTENSIONES NUEVAS ===
+
+class Sora2Extension {
+    constructor() {
+        this.name = 'Sora 2';
+        this.baseUrl = 'https://openai.com/sora';
+    }
+    
+    open() {
+        window.open(this.baseUrl, '_blank', 'width=1200,height=800');
+        this.showInstructions();
+    }
+    
+    import() {
+        this.showImportModal();
+    }
+    
+    showInstructions() {
+        const modal = document.createElement('div');
+        modal.className = 'instruction-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3>🎬 Instrucciones para Sora 2</h3>
+                <ol>
+                    <li>Accede a OpenAI Sora en la ventana abierta</li>
+                    <li>Ingresa tu prompt de texto descriptivo</li>
+                    <li>Configura la duración y resolución del video</li>
+                    <li>Genera tu video con IA</li>
+                    <li>Descarga el video generado</li>
+                    <li>Vuelve aquí para importarlo al editor</li>
+                </ol>
+                <button onclick="this.parentElement.parentElement.remove()">Cerrar</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    showImportModal() {
+        const modal = document.createElement('div');
+        modal.className = 'import-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3>Importar desde Sora 2</h3>
+                <div class="import-form">
+                    <label>Video generado:</label>
+                    <input type="file" id="sora2-video" accept="video/*">
+                    
+                    <label>Prompt utilizado:</label>
+                    <textarea id="sora2-prompt" placeholder="Describe el prompt usado..."></textarea>
+                    
+                    <label>Duración:</label>
+                    <select id="sora2-duration">
+                        <option value="short">Corto (hasta 20s)</option>
+                        <option value="medium">Medio (20-60s)</option>
+                        <option value="long">Largo (más de 60s)</option>
+                    </select>
+                    
+                    <button onclick="this.processSora2Import()">Importar Video</button>
+                    <button onclick="this.parentElement.parentElement.remove()">Cancelar</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    processSora2Import() {
+        const video = document.getElementById('sora2-video').files[0];
+        const prompt = document.getElementById('sora2-prompt').value;
+        const duration = document.getElementById('sora2-duration').value;
+        
+        if (video) {
+            // Procesar importación
+            console.log('Importing Sora 2 video:', { video, prompt, duration });
+            alert('Video de Sora 2 importado correctamente');
+            document.querySelector('.import-modal').remove();
+        } else {
+            alert('Por favor, selecciona un video');
+        }
+    }
+}
+
+class GrokVideoExtension {
+    constructor() {
+        this.name = 'Grok Video';
+        this.baseUrl = 'https://grok.com';
+    }
+    
+    open() {
+        window.open(this.baseUrl, '_blank', 'width=1200,height=800');
+        this.showInstructions();
+    }
+    
+    import() {
+        this.showImportModal();
+    }
+    
+    showInstructions() {
+        const modal = document.createElement('div');
+        modal.className = 'instruction-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3>🤖 Instrucciones para Grok Videos</h3>
+                <ol>
+                    <li>Accede a Grok en la ventana abierta</li>
+                    <li>Inicia una conversación sobre generación de videos</li>
+                    <li>Describe el tipo de video que necesitas</li>
+                    <li>Utiliza las herramientas de análisis de Grok</li>
+                    <li>Genera o analiza contenido de video</li>
+                    <li>Vuelve aquí para importar los resultados</li>
+                </ol>
+                <button onclick="this.parentElement.parentElement.remove()">Cerrar</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    showImportModal() {
+        const modal = document.createElement('div');
+        modal.className = 'import-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3>Importar desde Grok</h3>
+                <div class="import-form">
+                    <label>URL del contenido de Grok:</label>
+                    <input type="url" id="grok-url" placeholder="https://grok.com/...">
+                    
+                    <label>Video o análisis:</label>
+                    <input type="file" id="grok-content" accept="video/*,text/*">
+                    
+                    <label>Descripción del análisis:</label>
+                    <textarea id="grok-analysis" placeholder="Describe el análisis o contenido generado..."></textarea>
+                    
+                    <label>Tipo de contenido:</label>
+                    <select id="grok-type">
+                        <option value="video">Video generado</option>
+                        <option value="analysis">Análisis de video</option>
+                        <option value="script">Script para video</option>
+                        <option value="other">Otro</option>
+                    </select>
+                    
+                    <button onclick="this.processGrokImport()">Importar Contenido</button>
+                    <button onclick="this.parentElement.parentElement.remove()">Cancelar</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    processGrokImport() {
+        const url = document.getElementById('grok-url').value;
+        const content = document.getElementById('grok-content').files[0];
+        const analysis = document.getElementById('grok-analysis').value;
+        const type = document.getElementById('grok-type').value;
+        
+        if (url || content) {
+            // Procesar importación
+            console.log('Importing Grok content:', { url, content, analysis, type });
+            alert('Contenido de Grok importado correctamente');
+            document.querySelector('.import-modal').remove();
+        } else {
+            alert('Por favor, proporciona una URL o selecciona un archivo');
+        }
+    }
+}

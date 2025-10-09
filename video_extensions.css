@@ -1,0 +1,264 @@
+/* Estilos para extensiones de video - Sora 2, Grok y enlaces */
+
+/* Contenedores de extensiones de video */
+.sora2-extension {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 2px solid #667eea;
+}
+
+.sora2-extension h3 {
+    color: #ffffff;
+}
+
+.sora2-extension p {
+    color: #f0f0f0;
+}
+
+.grok-extension {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    border: 2px solid #ff6b6b;
+}
+
+.grok-extension h3 {
+    color: #ffffff;
+}
+
+.grok-extension p {
+    color: #f0f0f0;
+}
+
+/* Contenedor de enlaces de video */
+.video-links-extension {
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    border: 2px solid #74b9ff;
+}
+
+.video-links-extension h3 {
+    color: #ffffff;
+}
+
+.video-links-extension p {
+    color: #f0f0f0;
+}
+
+/* Grid de enlaces de video */
+.video-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.video-link-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    text-align: center;
+}
+
+.video-link-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Formulario de enlace personalizado */
+.custom-video-link {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.custom-video-link input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.custom-video-link input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.custom-video-link button {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-video-link button:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Modales de instrucciones e importación */
+.instruction-modal,
+.import-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.instruction-modal .modal-content,
+.import-modal .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.instruction-modal h3,
+.import-modal h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.instruction-modal ol {
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.instruction-modal li {
+    margin-bottom: 8px;
+    color: #34495e;
+}
+
+/* Formularios de importación */
+.import-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.import-form label {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.import-form input,
+.import-form textarea,
+.import-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.import-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.import-form button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.import-form button:first-of-type {
+    background: #3498db;
+    color: white;
+}
+
+.import-form button:first-of-type:hover {
+    background: #2980b9;
+}
+
+.import-form button:last-of-type {
+    background: #95a5a6;
+    color: white;
+}
+
+.import-form button:last-of-type:hover {
+    background: #7f8c8d;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .video-links-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 8px;
+    }
+    
+    .video-link-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .custom-video-link {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .instruction-modal .modal-content,
+    .import-modal .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+}
+
+/* Animaciones */
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.extension-container {
+    animation: slideInFromBottom 0.5s ease-out;
+}
+
+/* Estados de carga */
+.loading-state {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading-state::after {
+    content: "Cargando...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+}
