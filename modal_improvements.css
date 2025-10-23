@@ -1,0 +1,368 @@
+/* === MEJORAS PARA MODALES Y ELEMENTOS FLOTANTES === */
+
+/* Overlay base para todos los modales */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Contenedor base para modales */
+.modal-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Botón de cierre mejorado */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+    transition: all 0.2s ease;
+    z-index: 10001;
+}
+
+.close-btn:hover {
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4444;
+    transform: scale(1.1);
+}
+
+.close-btn:active {
+    transform: scale(0.95);
+}
+
+/* Estilos específicos para diferentes tipos de modales */
+.voice-interface {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    min-width: 300px;
+    text-align: center;
+    animation: bounceIn 0.4s ease-out;
+}
+
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    max-width: 400px;
+    animation: slideInUp 0.4s ease-out;
+}
+
+.instruction-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: zoomIn 0.3s ease-out;
+}
+
+.import-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    min-width: 400px;
+    animation: slideInDown 0.3s ease-out;
+}
+
+/* Notificaciones mejoradas */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 10001;
+    max-width: 350px;
+    word-wrap: break-word;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    animation: slideInRight 0.3s ease-out;
+    cursor: pointer;
+}
+
+.notification-success {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+}
+
+.notification-error {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+}
+
+.notification-info {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+}
+
+.notification-warning {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from { 
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from { 
+        opacity: 0;
+        transform: translate(-50%, -100px);
+    }
+    to { 
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes slideInRight {
+    from { 
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Mejoras para elementos interactivos */
+.modal-container button,
+.voice-interface button,
+.cookie-consent-banner button,
+.instruction-modal button,
+.import-modal button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin: 5px;
+}
+
+.modal-container button:hover,
+.voice-interface button:hover,
+.cookie-consent-banner button:hover,
+.instruction-modal button:hover,
+.import-modal button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-container button:active,
+.voice-interface button:active,
+.cookie-consent-banner button:active,
+.instruction-modal button:active,
+.import-modal button:active {
+    transform: translateY(0);
+}
+
+/* Botones primarios */
+.btn-primary {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #3d8bfe 0%, #00d4fe 100%);
+}
+
+/* Botones secundarios */
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* Botones de peligro */
+.btn-danger {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ff3333, #bb0000);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .modal-container {
+        max-width: 95vw;
+        margin: 10px;
+    }
+    
+    .voice-interface {
+        min-width: 280px;
+        margin: 20px;
+    }
+    
+    .cookie-consent-banner {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+}
+
+/* Mejoras para accesibilidad */
+.modal-container:focus,
+.voice-interface:focus,
+.cookie-consent-banner:focus,
+.instruction-modal:focus,
+.import-modal:focus {
+    outline: 2px solid #4facfe;
+    outline-offset: 2px;
+}
+
+/* Prevenir scroll del body cuando hay modal abierto */
+.modal-open {
+    overflow: hidden;
+}
+
+/* Estilos para elementos que se pueden arrastrar */
+.draggable {
+    cursor: move;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+/* Indicador de carga para modales */
+.modal-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.modal-loading::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4facfe;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

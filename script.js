@@ -1245,3 +1245,38 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 500);
 });
 
+
+async function improveText() {
+    console.log("improveText function called");
+    const editor = document.getElementById("editor");
+    const selectedText = window.getSelection().toString();
+    const textToImprove = selectedText || editor.innerText;
+
+    if (!textToImprove) {
+        alert("No hay texto para mejorar.");
+        return;
+    }
+
+    console.log("Texto a mejorar:", textToImprove);
+
+    const groqSuggestion = await getGroqCompletion(`Mejora el siguiente texto: "${textToImprove}"`);
+    console.log("Sugerencia de Groq:", groqSuggestion);
+
+    if (groqSuggestion) {
+        const geminiSuggestion = await getGeminiCompletion(`Mejora esta sugerencia: "${groqSuggestion}"`);
+        console.log("Sugerencia de Gemini:", geminiSuggestion);
+
+        const suggestionsContainer = document.getElementById("suggestions-container");
+        suggestionsContainer.innerHTML = `
+            <div class="suggestion">
+                <h4>Sugerencia de Groq:</h4>
+                <p>${groqSuggestion}</p>
+            </div>
+            <div class="suggestion">
+                <h4>Sugerencia de Gemini:</h4>
+                <p>${geminiSuggestion}</p>
+            </div>
+        `;
+    }
+}
+

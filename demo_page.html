@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MundosInfinitos - Crea, Importa y Comparte Contenido</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .main-feature {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .main-feature h2 {
+            color: #4a5568;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .main-feature .highlight {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+
+        .examples-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .example-item {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .user-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .add-content-form {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .trending-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .trending-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .trending-tag {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .main-feature h2 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🌍 MundosInfinitos</h1>
+            <p class="subtitle">Crea, Importa y Comparte Contenido Multimedia</p>
+        </div>
+
+        <!-- Main Feature -->
+        <div class="main-feature">
+            <h2>🚀 <span class="highlight">Extrae e Importa</span> tu Contenido</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                La función principal de MundosInfinitos es <strong>extraer contenido desde tu editor</strong> 
+                e <strong>importarlo directamente</strong> a las aplicaciones de generación de mundos. 
+                Convierte tus creaciones literarias, visuales y audibles en experiencias inmersivas.
+            </p>
+            <a href="#" class="btn" onclick="openEditor()">🎨 Abrir Editor Principal</a>
+            <a href="#" class="btn btn-secondary" onclick="showImportOptions()">📥 Ver Opciones de Importación</a>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <div class="feature-card" onclick="openFeature('worlds')">
+                <span class="feature-icon">🌎</span>
+                <h3>Mundos 3D</h3>
+                <p>Genera mundos inmersivos desde tus textos. Convierte historias en experiencias VR y espacios explorables.</p>
+                <a href="#" class="btn">Crear Mundo</a>
+            </div>
+
+            <div class="feature-card" onclick="openFeature('books')">
+                <span class="feature-icon">📚</span>
+                <h3>Libros IA</h3>
+                <p>Genera libros completos con Gemini AI. Desde cuentos cortos hasta novelas extensas en múltiples géneros.</p>
+                <a href="#" class="btn">Generar Libro</a>
+            </div>
+
+            <div class="feature-card" onclick="openFeature('multimedia')">
+                <span class="feature-icon">🎥</span>
+                <h3>Contenido Multimedia</h3>
+                <p>Analiza y gestiona videos, audios e imágenes. Integración con YouTube, TryGenie3.net y más plataformas.</p>
+                <a href="#" class="btn">Gestionar Media</a>
+            </div>
+
+            <div class="feature-card" onclick="openFeature('presentations')">
+                <span class="feature-icon">📊</span>
+                <h3>Presentaciones</h3>
+                <p>Crea presentaciones interactivas desde tu contenido. Exporta a PowerPoint, PDF o formatos web.</p>
+                <a href="#" class="btn">Crear Presentación</a>
+            </div>
+
+            <div class="feature-card" onclick="openFeature('games')">
+                <span class="feature-icon">🎮</span>
+                <h3>Juegos en Tiempo Real</h3>
+                <p>Convierte tus historias en juegos interactivos. Experiencias inmersivas con decisiones del usuario.</p>
+                <a href="#" class="btn">Crear Juego</a>
+            </div>
+
+            <div class="feature-card" onclick="openFeature('avatars')">
+                <span class="feature-icon">🎭</span>
+                <h3>Avatares y NFTs</h3>
+                <p>Genera avatares personalizados con DynamicLabs.ai. Integración con Fancy Bears Metaverse y más.</p>
+                <a href="#" class="btn">Crear Avatar</a>
+            </div>
+        </div>
+
+        <!-- Examples Section -->
+        <div class="examples-section">
+            <h2>💡 Ejemplos de Uso</h2>
+            <p>Descubre cómo otros usuarios están utilizando MundosInfinitos:</p>
+            
+            <div class="examples-grid">
+                <div class="example-item">
+                    <h4>🏰 Reino Fantástico</h4>
+                    <p>Historia épica convertida en mundo VR explorable con castillos, dragones y misiones.</p>
+                    <small><strong>Por:</strong> Usuario123 | <strong>Tipo:</strong> Mundo 3D</small>
+                </div>
+                
+                <div class="example-item">
+                    <h4>🚀 Aventura Espacial</h4>
+                    <p>Novela de ciencia ficción transformada en juego interactivo con decisiones múltiples.</p>
+                    <small><strong>Por:</strong> SciFiWriter | <strong>Tipo:</strong> Juego Interactivo</small>
+                </div>
+                
+                <div class="example-item">
+                    <h4>🎨 Galería Virtual</h4>
+                    <p>Colección de arte digital presentada en un museo virtual inmersivo.</p>
+                    <small><strong>Por:</strong> ArtistaPro | <strong>Tipo:</strong> Experiencia VR</small>
+                </div>
+                
+                <div class="example-item">
+                    <h4>📖 Cuentos Infantiles</h4>
+                    <p>Serie de cuentos con personajes animados y narración interactiva.</p>
+                    <small><strong>Por:</strong> MamaCreativa | <strong>Tipo:</strong> Libro Interactivo</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Content Section -->
+        <div class="user-content">
+            <h2>🤝 Comparte tu Creación</h2>
+            <p>¿Has creado algo increíble? ¡Compártelo con la comunidad!</p>
+            
+            <div class="add-content-form">
+                <div class="form-group">
+                    <label for="title">Título de tu Creación:</label>
+                    <input type="text" id="title" placeholder="Ej: Mi Mundo Mágico">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Descripción:</label>
+                    <textarea id="description" rows="3" placeholder="Describe tu creación..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="link">Enlace a tu Creación:</label>
+                    <input type="url" id="link" placeholder="https://tu-enlace-aqui.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="type">Tipo de Contenido:</label>
+                    <select id="type" style="width: 100%; padding: 12px; border: none; border-radius: 8px;">
+                        <option value="mundo">Mundo 3D</option>
+                        <option value="libro">Libro/Historia</option>
+                        <option value="juego">Juego Interactivo</option>
+                        <option value="presentacion">Presentación</option>
+                        <option value="multimedia">Contenido Multimedia</option>
+                        <option value="avatar">Avatar/NFT</option>
+                    </select>
+                </div>
+                
+                <button class="btn" onclick="submitContent()">📤 Compartir Creación</button>
+            </div>
+        </div>
+
+        <!-- Trending Section -->
+        <div class="trending-section">
+            <h2>🔥 Tendencias 2025</h2>
+            <p>Lo que está siendo más utilizado en creación de contenido:</p>
+            
+            <div class="trending-items">
+                <span class="trending-tag">IA Generativa</span>
+                <span class="trending-tag">Mundos VR</span>
+                <span class="trending-tag">Contenido UGC</span>
+                <span class="trending-tag">NFTs Interactivos</span>
+                <span class="trending-tag">Narrativa Inmersiva</span>
+                <span class="trending-tag">Metaverso</span>
+                <span class="trending-tag">Realidad Mixta</span>
+                <span class="trending-tag">Avatares IA</span>
+                <span class="trending-tag">Juegos Narrativos</span>
+                <span class="trending-tag">Experiencias Sociales</span>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #f7fafc; border-radius: 10px;">
+                <h3>🎯 Funcionalidades Más Populares:</h3>
+                <ul style="margin-top: 15px; padding-left: 20px;">
+                    <li><strong>Extracción de Contenido:</strong> 89% de usuarios importan desde editores externos</li>
+                    <li><strong>Mundos 3D:</strong> 76% crean experiencias inmersivas desde textos</li>
+                    <li><strong>Colaboración:</strong> 68% comparten creaciones con la comunidad</li>
+                    <li><strong>Multiplataforma:</strong> 82% exportan a múltiples formatos</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>🌟 MundosInfinitos - Donde tu imaginación cobra vida</p>
+            <p>Conecta con <a href="https://carlomaxxine.com/saloon" style="color: #4ecdc4;">Carlo Maxxine Saloon</a> | 
+               Powered by <a href="https://maxxine.net" style="color: #4ecdc4;">Maxxine.net</a></p>
+        </div>
+    </div>
+
+    <script>
+        function openEditor() {
+            // Redirigir al editor principal
+            window.location.href = 'index.html';
+        }
+
+        function showImportOptions() {
+            alert('🔄 Opciones de Importación:\n\n' +
+                  '📝 Desde Editor de Texto\n' +
+                  '🎨 Desde Herramientas de Diseño\n' +
+                  '🎵 Desde Editores de Audio\n' +
+                  '🎥 Desde Plataformas de Video\n' +
+                  '☁️ Desde Almacenamiento en la Nube\n\n' +
+                  'Próximamente: Importación directa desde Google Docs, Notion, y más...');
+        }
+
+        function openFeature(feature) {
+            const features = {
+                'worlds': '#3d-worlds',
+                'books': '#gemini-books',
+                'multimedia': '#video-selection',
+                'presentations': '#presentations',
+                'games': '#games',
+                'avatars': '#avatars'
+            };
+            
+            if (features[feature]) {
+                window.location.href = 'index.html' + features[feature];
+            }
+        }
+
+        function submitContent() {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const link = document.getElementById('link').value;
+            const type = document.getElementById('type').value;
+            
+            if (!title || !description || !link) {
+                alert('⚠️ Por favor, completa todos los campos');
+                return;
+            }
+            
+            // Simular envío
+            alert('🎉 ¡Gracias por compartir!\n\n' +
+                  'Tu creación "' + title + '" ha sido enviada para revisión.\n' +
+                  'Aparecerá en la sección de ejemplos una vez aprobada.\n\n' +
+                  '💡 Tip: Comparte el enlace en redes sociales para obtener más visibilidad.');
+            
+            // Limpiar formulario
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('link').value = '';
+        }
+
+        // Animaciones suaves al cargar
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+
+        // Efectos de hover mejorados
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

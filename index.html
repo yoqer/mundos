@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="agents_styles.css">
     <link rel="stylesheet" href="video_extensions.css">
     <link rel="stylesheet" href="fixes.css">
+    <link rel="stylesheet" href="modal_improvements.css">
+    <link rel="stylesheet" href="api_keys_settings.css">
+    <link rel="stylesheet" href="browser_integration.css">
 </head>
 <body>
     <div class="container">
@@ -39,6 +42,8 @@
                 <button class="nav-btn" data-section="book-editor">Editar</button>
             </div>
             <button class="nav-btn help-btn" onclick="openHelpPage()">❓ Ayuda</button>
+            <button class="nav-btn settings-btn" onclick="apiKeysSettings.openModal()">⚙️ API Keys</button>
+            <button class="nav-btn browser-btn" onclick="browserIntegration.openBrowserControlPanel()">🌐 Navegador</button>
         </nav>
 
         <main class="main-content">
@@ -856,6 +861,12 @@
     <!-- Sistema de caché inteligente -->
     <script src="intelligent_cache.js"></script>
     
+    <!-- Sistema avanzado de modales -->
+    <script src="advanced_modal_system.js"></script>
+    
+    <!-- Mejoras del sistema de navegación -->
+    <script src="navigation_improvements.js"></script>
+    
     <!-- Correcciones de interfaz unificadas -->
     <script src="unified_fixes.js"></script>
     
@@ -880,3 +891,149 @@
     <script src="agents_extension.js"></script>
 </body>
 </html>
+
+    
+
+
+
+    <script src="gemini_integration.js"></script>
+    <script src="veo31_integration.js"></script>
+    <script src="vr_decart_integration.js"></script>
+    <script src="imagine_v09_integration.js"></script>
+    <script src="grok4_integration.js"></script>
+    <script src="api_keys_manager.js"></script>
+    <script src="api_keys_settings.js"></script>
+    <script src="browser_integration.js"></script>
+
+
+<section id="book-editor" class="content-section">
+                <h2>Editor de Libros</h2>
+                <div class="editor-container">
+                    <div id="editor" contenteditable="true" class="editor-main"></div>
+                    <div class="editor-toolbar">
+                        <button onclick="improveText()">Mejorar Texto</button>
+                    </div>
+                    <div id="suggestions-container" class="suggestions-container"></div>
+                </div>
+            </section>
+
+
+<!-- Sección 9: Generación de Video con Veo 3.1 -->
+<section id="veo31-video-generation" class="content-section">
+    <h2>Generación de Video con Google Veo 3.1</h2>
+    <div class="platform-section">
+        <h3>Generar Video desde Prompt</h3>
+        <div class="platform-controls">
+            <input type="text" id="veo31-prompt" placeholder="Describe el video que quieres generar">
+            <input type="number" id="veo31-duration" value="30" min="5" max="120" placeholder="Duración (segundos)">
+            <select id="veo31-resolution">
+                <option value="720p">720p</option>
+                <option value="1080p" selected>1080p</option>
+                <option value="4K">4K</option>
+            </select>
+            <button onclick="generateVideoWithVeo31()">Generar Video</button>
+        </div>
+        <div id="veo31-result" class="results-panel"></div>
+        <div class="status-display">
+            Estado: <span id="veo31-status">Desconectado</span>
+            Progreso: <div class="progress-bar"><div id="veo31-progress" style="width: 0%;">0%</div></div>
+        </div>
+    </div>
+    <h3>Generar Video desde Contenido del Editor</h3>
+    <div class="platform-controls">
+        <textarea id="veo31-editor-content" rows="5" placeholder="Pega aquí el contenido de tu editor para generar un video..."></textarea>
+        <button onclick="generateVideoFromEditorWithVeo31()">Generar Video desde Editor</button>
+    </div>
+</section>
+
+<!-- Sección 10: Mundos VR en Tiempo Real con vr.decart.ai -->
+<section id="vr-decart-worlds" class="content-section">
+    <h2>Mundos VR en Tiempo Real con vr.decart.ai</h2>
+    <div class="platform-section">
+        <h3>Generar Mundo VR desde Descripción</h3>
+        <div class="platform-controls">
+            <input type="text" id="vr-decart-description" placeholder="Describe el mundo VR que quieres generar">
+            <select id="vr-decart-type">
+                <option value="immersive">Inmersivo</option>
+                <option value="interactive">Interactivo</option>
+                <option value="narrative">Narrativo</option>
+                <option value="sandbox">Sandbox</option>
+                <option value="social">Social Multijugador</option>
+            </select>
+            <select id="vr-decart-quality">
+                <option value="low">Baja</option>
+                <option value="medium" selected>Media</option>
+                <option value="high">Alta</option>
+                <option value="ultra">Ultra</option>
+            </select>
+            <label><input type="checkbox" id="vr-multiplayer"> Multijugador</label>
+            <button onclick="generateVRWorldWithDecart()">Generar Mundo VR</button>
+        </div>
+        <div id="vr-decart-result" class="results-panel"></div>
+        <div class="status-display">
+            Estado: <span id="vr-decart-status">Desconectado</span>
+            Progreso: <div class="progress-bar"><div id="vr-decart-progress" style="width: 0%;">0%</div></div>
+            Etapa: <span id="vr-decart-stage"></span>
+            Usuarios: <span id="vr-world-users">0</span>
+        </div>
+    </div>
+    <h3>Generar Mundo VR desde Contenido de Historia</h3>
+    <div class="platform-controls">
+        <textarea id="vr-decart-story-content" rows="5" placeholder="Pega aquí el contenido de tu historia para generar un mundo VR..."></textarea>
+        <button onclick="generateVRWorldFromStoryWithDecart()">Generar Mundo VR desde Historia</button>
+    </div>
+</section>
+
+<!-- Sección 11: Generación de Contenido con Grok4 (xAI) -->
+<section id="grok4-content-generation" class="content-section">
+    <h2>Generación de Contenido con Grok4 (xAI)</h2>
+    <div class="platform-section">
+        <h3>Generar Texto o Video desde Prompt</h3>
+        <div class="platform-controls">
+            <input type="text" id="grok4-prompt" placeholder="Describe el texto o video que quieres generar">
+            <select id="grok4-content-type">
+                <option value="text" selected>Texto</option>
+                <option value="video">Video (via Imagine v0.9)</option>
+            </select>
+            <button onclick="generateContentWithGrok4()">Generar Contenido</button>
+        </div>
+        <div id="grok4-result" class="results-panel"></div>
+        <div class="status-display">
+            Estado: <span id="grok4-status">Desconectado</span>
+            Progreso Video: <div class="progress-bar"><div id="imagine-v09-progress" style="width: 0%;">0%</div></div>
+        </div>
+    </div>
+    <h3>Generar Video desde Contenido del Editor (via Imagine v0.9)</h3>
+    <div class="platform-controls">
+        <textarea id="grok4-editor-content" rows="5" placeholder="Pega aquí el contenido de tu editor para generar un video..."></textarea>
+        <button onclick="generateVideoFromEditorWithGrok4()">Generar Video desde Editor</button>
+    </div>
+</section>
+
+<!-- Sección 12: Generación de Imagen y Video con Imagine v0.9 (xAI) -->
+<section id="imagine-v09-generation" class="content-section">
+    <h2>Generación de Imagen y Video con Imagine v0.9 (xAI)</h2>
+    <div class="platform-section">
+        <h3>Generar Video desde Prompt</h3>
+        <div class="platform-controls">
+            <input type="text" id="imagine-v09-prompt" placeholder="Describe el video que quieres generar">
+            <input type="number" id="imagine-v09-duration" value="15" min="5" max="60" placeholder="Duración (segundos)">
+            <select id="imagine-v09-resolution">
+                <option value="720p">720p</option>
+                <option value="1080p" selected>1080p</option>
+            </select>
+            <button onclick="generateVideoWithImagineV09()">Generar Video</button>
+        </div>
+        <div id="imagine-v09-result" class="results-panel"></div>
+        <div class="status-display">
+            Estado: <span id="imagine-v09-status">Desconectado</span>
+            Progreso: <div class="progress-bar"><div id="imagine-v09-progress" style="width: 0%;">0%</div></div>
+        </div>
+    </div>
+    <h3>Generar Video desde Contenido del Editor</h3>
+    <div class="platform-controls">
+        <textarea id="imagine-v09-editor-content" rows="5" placeholder="Pega aquí el contenido de tu editor para generar un video..."></textarea>
+        <button onclick="generateVideoFromEditorWithImagineV09()">Generar Video desde Editor</button>
+    </div>
+</section>
+
