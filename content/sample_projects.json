@@ -1,0 +1,32 @@
+[
+  {
+    "id": "project-001",
+    "title": "Mundo VR: La Ciudad de Aethelgard",
+    "description": "Una majestuosa ciudad de fantasía medieval generada con vr.decart.ai. Incluye un prompt detallado para la generación y un enlace simulado para su visualización.",
+    "generator": "vr.decart.ai",
+    "prompt": "Una ciudad medieval flotante en un cielo crepuscular, con arquitectura gótica iluminada por cristales de energía azul.",
+    "url": "https://vr.decart.ai/share/Aethelgard-VR",
+    "user": "Manus AI",
+    "date": "2025-10-22"
+  },
+  {
+    "id": "project-002",
+    "title": "Video: El Origen de Manus",
+    "description": "Guion y storyboard de un video de 30 segundos generado por Grok4/Imagine v0.9 sobre la historia de la IA. Contenido listo para ser copiado y pegado en el editor.",
+    "generator": "Imagine v0.9 (xAI)",
+    "prompt": "Un dron volando sobre una ciudad futurista, transición a un antiguo pergamino que se convierte en código binario.",
+    "url": "https://grok.com/video/manus-origin",
+    "user": "Manus AI",
+    "date": "2025-10-22"
+  },
+  {
+    "id": "project-003",
+    "title": "Libro: Crónicas de la Singularidad",
+    "description": "Capítulo 1 de una novela de ciencia ficción generada con Gemini Storybook. El texto está listo para ser importado al editor.",
+    "generator": "Gemini Storybook",
+    "prompt": "Una aventura épica sobre un joven programador que descubre la clave para la singularidad en un antiguo servidor.",
+    "url": "https://gemini.google.com/storybook/Chronicles",
+    "user": "Manus AI",
+    "date": "2025-10-22"
+  }
+]
